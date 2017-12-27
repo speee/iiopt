@@ -1,0 +1,13 @@
+{
+  "name": "iiopt",
+  "version": "1.0.0",
+  "description": "(iikanji ni)nice image optimizer ",
+  "main": "build/index.js",
+  "author": "shuhei.morioka",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^8.5.2",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
+  }
+}
