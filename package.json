@@ -2,9 +2,12 @@
   "name": "iiopt",
   "version": "1.0.0",
   "description": "(iikanji ni)nice image optimizer ",
-  "main": "build/index.js",
+  "main": "build/cli.js",
   "author": "shuhei.morioka",
   "license": "MIT",
+  "bin": {
+    "iiopt": "build/cli.js"
+  },
   "devDependencies": {
     "@types/node": "^8.5.2",
     "ts-node": "^4.1.0",

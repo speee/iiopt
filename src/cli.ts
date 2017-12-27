@@ -10,7 +10,7 @@ const cli = meow(`
 `)
 
 function run(input, opt){
-  console.log()
+  console.log(input);
   return input;
 }
 
