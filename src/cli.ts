@@ -9,9 +9,10 @@ import * as fs from 'fs';
 const cli = meow(`
   Usage
     $ iiopt <file>
-    $ iiopt <file> > <output>
+    $ iiopt <file> --out-dir <output>
   Example
     $ iiopt foo.png # overwrite foo.png with compressed image
+    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
 `)
 
 function run(input, opts){

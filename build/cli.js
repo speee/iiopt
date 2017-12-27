@@ -6,7 +6,7 @@ var imagemin = require("imagemin");
 var imageminPngquant = require("imagemin-pngquant");
 var imageminMozjpeg = require("imagemin-mozjpeg");
 var fs = require("fs");
-var cli = meow("\n  Usage\n    $ iiopt <file>\n    $ iiopt <file> > <output>\n  Example\n    $ iiopt foo.png # overwrite foo.png with compressed image\n");
+var cli = meow("\n  Usage\n    $ iiopt <file>\n    $ iiopt <file> --out-dir <output>\n  Example\n    $ iiopt foo.png # overwrite foo.png with compressed image\n    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory\n");
 function run(input, opts) {
     imagemin([input], opts.outDir, {
         plugins: [
