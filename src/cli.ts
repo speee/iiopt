@@ -1,4 +1,8 @@
 import * as meow from 'meow';
+import * as imagemin from 'imagemin';
+import * as imageminPngquant from 'imagemin-pngquant';
+import * as imageminMozjpeg from 'imagemin-mozjpeg';
+import * as fs from 'fs';
 
 const cli = meow(`
   Usage
@@ -6,12 +10,17 @@ const cli = meow(`
     $ iiopt <file> > <output>
   Example
     $ iiopt foo.png # overwrite foo.png with compressed image
-    $ iiopt foo.png > compressed-foo.png
 `)
 
-function run(input, opt){
-  console.log(input);
-  return input;
+function run(input, opts){
+  imagemin([input], './compressed', {
+    plugin: [
+      imageminPngquant({ quality: 85 }),
+      imageminMozjpeg({ progressive: true, quality: 85 })
+    ]
+  }).then(files => {
+    fs.writeFileSync('compressed.png', files[0].data);
+  });
 }
 
-run(cli.input, cli.flags);
+run(cli.input[0], cli.flags);
