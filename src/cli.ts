@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as meow from 'meow';
 import * as imagemin from 'imagemin';
 import * as imageminPngquant from 'imagemin-pngquant';
@@ -13,13 +15,15 @@ const cli = meow(`
 `)
 
 function run(input, opts){
-  imagemin([input], './compressed', {
-    plugin: [
+  imagemin([input], opts.outDir, {
+    plugins: [
       imageminPngquant({ quality: 85 }),
       imageminMozjpeg({ progressive: true, quality: 85 })
     ]
   }).then(files => {
-    fs.writeFileSync('compressed.png', files[0].data);
+    if (!opts.outDir) {
+      fs.writeFileSync(input, files[0].data);
+    }
   });
 }
 
