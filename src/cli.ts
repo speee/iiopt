@@ -13,8 +13,8 @@ const cli = meow(`
   Option
     --overwrite, -o  overwrite images
   Example
-    $ iiopt foo.png # overwrite foo.png with compressed image
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
+    $ iiopt foo.png -o # overwrite foo.png with compressed image
 `, {
 	flags: {
 		overwrite: {
@@ -26,13 +26,18 @@ const cli = meow(`
 })
 
 function run(input, opts){
+  if ( !opts.outDir && !opts.overwrite ) {
+    console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
+    process.exit(1);
+  }
+
   imagemin([input], opts.outDir, {
     plugins: [
       imageminPngquant({ quality: 85 }),
       imageminMozjpeg({ progressive: true, quality: 85 })
     ]
   }).then(files => {
-    if (!opts.outDir) {
+    if (!opts.outDir && opts.overwrite) {
       fs.writeFileSync(input, files[0].data);
     }
   });
