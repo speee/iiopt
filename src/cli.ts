@@ -5,6 +5,7 @@ import * as imagemin from 'imagemin';
 import * as imageminPngquant from 'imagemin-pngquant';
 import * as imageminMozjpeg from 'imagemin-mozjpeg';
 import * as fs from 'fs';
+import * as glob from 'glob';
 
 const cli = meow(`
   Usage
@@ -25,11 +26,27 @@ const cli = meow(`
 	}
 })
 
+class Image {
+  private readonly path: string;
+  private readonly beforeSize: number;
+  public afterSize: number;
+
+  constructor(path, beforeSize){
+    this.path = path;
+    this.beforeSize = beforeSize;
+  }
+}
+
+
 function run(input, opts){
   if ( !opts.outDir && !opts.overwrite ) {
     console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
     process.exit(1);
   }
+
+  const images = glob.GlobSync(input).found.map((path) => {
+    return new Image(path, fs.lstatSync(path).size)
+  });
 
   imagemin([input], opts.outDir, {
     plugins: [
