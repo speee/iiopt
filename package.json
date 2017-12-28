@@ -7,6 +7,9 @@
   "bin": {
     "iiopt": "build/cli.js"
   },
+  "scripts": {
+    "build": "yarn tsc"
+  },
   "devDependencies": {
     "@types/node": "^8.5.2",
     "ts-node": "^4.1.0",
