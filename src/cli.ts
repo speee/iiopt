@@ -6,6 +6,7 @@ import * as imageminPngquant from 'imagemin-pngquant';
 import * as imageminMozjpeg from 'imagemin-mozjpeg';
 import * as fs from 'fs';
 import * as glob from 'glob';
+import { Image } from './image';
 
 const cli = meow(`
   Usage
@@ -25,18 +26,6 @@ const cli = meow(`
 		}
 	}
 })
-
-class Image {
-  private readonly path: string;
-  private readonly beforeSize: number;
-  public afterSize: number;
-
-  constructor(path, beforeSize){
-    this.path = path;
-    this.beforeSize = beforeSize;
-  }
-}
-
 
 function run(input, opts){
   if ( !opts.outDir && !opts.overwrite ) {
