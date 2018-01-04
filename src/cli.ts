@@ -7,6 +7,7 @@ import * as imageminMozjpeg from 'imagemin-mozjpeg';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import { Image } from './image';
+import * as path from 'path';
 
 const cli = meow(`
   Usage
@@ -44,11 +45,20 @@ function run(input, opts){
     ]
   }).then(files => {
     files.forEach((file) => {
-      console.log(file);
       if (!opts.outDir && opts.overwrite) {
         fs.writeFileSync(input, file.data);
+      } else {
+        const image = images.find((image) => {
+          return path.basename(image.path) == path.basename(file.path);
+        });
+        image.afterSize = file.data.length
       }
     });
+    return images;
+  }).then((images)=>{
+    images.forEach((image) => {
+      console.log(image.compressionReport());
+    })
   });
 }
 

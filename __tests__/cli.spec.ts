@@ -57,7 +57,7 @@ describe('compress png images', () => {
 
   test('指定されたpathに圧縮後の画像を出力する', () => {
     const rawImage = fs.readFileSync('images/illust.png');
-    child_process.execSync('iiopt images/illust.png --out-dir ./tmp');
+    child_process.execSync('iiopt images/illust.png --out-dir tmp');
     const compressedImage = fs.readFileSync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
