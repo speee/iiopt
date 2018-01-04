@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^21.1.10",
     "@types/node": "^8.5.2",
+    "execa": "^0.8.0",
     "jest": "^22.0.4",
     "ts-jest": "^22.0.0",
     "ts-node": "^4.1.0",
