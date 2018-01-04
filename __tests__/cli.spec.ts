@@ -2,8 +2,6 @@ import fs from 'fs';
 import execa from 'execa';
 import child_process from 'child_process';
 
-process.chdir(__dirname);
-
 describe('help message', ()=>{
   test('show help screen', () => {
     const helpMessage = execa.shellSync('iiopt --help');
