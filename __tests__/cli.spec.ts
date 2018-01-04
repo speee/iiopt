@@ -1,9 +1,14 @@
 import fs from 'fs';
-import spawn from 'child_process';
+import execa from 'execa';
 
 process.chdir(__dirname);
 
 describe('flag や optionの確認',()=>{
+  it('show help screen', () => {
+    const helpMessage = execa.shellSync('iiopt --help');
+    expect(helpMessage.stdout).toMatch(/nice/);
+  });
+
   it('--out-dir で指定されたpathに圧縮後の画像を出力する', () => {
   });
 
