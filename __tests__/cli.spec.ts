@@ -1,31 +1,45 @@
 import fs from 'fs';
 import execa from 'execa';
+import child_process from 'child_process';
 
 process.chdir(__dirname);
 
-describe('flag や optionの確認',()=>{
-  it('show help screen', () => {
+describe('help message', ()=>{
+  test('show help screen', () => {
     const helpMessage = execa.shellSync('iiopt --help');
     expect(helpMessage.stdout).toMatch(/nice/);
   });
+});
 
-  it('--out-dir で指定されたpathに圧縮後の画像を出力する', () => {
+describe('flag や optionの確認',()=>{
+  beforeAll(() => {
+    child_process.execSync('mkdir tmp');
+    console.log('create tmp directory to store compressed images');
   });
 
-  it('--out-dir が指定されておらず、--overwrite flagが設定された場合、画像を上書きする', () => {
+  afterAll(() => {
+    child_process.execSync('rm -rf tmp');
+    console.log('remove tmp directory');
   });
 
-  it('--out-dir が指定されておらず、--overwrite flagも設定されていない場合、エラーとなる', ()=> {
+  test('--out-dir で指定されたpathに圧縮後の画像を出力する', () => {
+  });
+
+  test('--out-dir が指定されておらず、--overwrite flagも設定されていない場合、エラーとなる', () => {
   });
 });
 
+describe('上書きの確認', () => {
+  test('--out-dir が指定されておらず、--overwrite flagが設定された場合、画像を上書きする', () => {
+  });
+});
 
 describe('compress png images', () => {
-  it('指定されたpathに圧縮後の画像を出力する', () => {
+  test('指定されたpathに圧縮後の画像を出力する', () => {
   });
 });
 
 describe('jpgの圧縮', ()=> {
-  it('指定されたpathに圧縮後の画像を出力する', () => {
+  test('指定されたpathに圧縮後の画像を出力する', () => {
   });
 });
