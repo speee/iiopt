@@ -21,9 +21,17 @@ describe('flag や optionの確認',()=>{
   });
 
   test('--out-dir で指定されたpathに圧縮後の画像を出力する', () => {
+    child_process.execSync('iiopt images/illust.png --out-dir tmp');
+    const images = execa.shellSync('ls ./tmp');
+    expect(images.stdout).toEqual('illust.png');
   });
 
   test('--out-dir が指定されておらず、--overwrite flagも設定されていない場合、エラーとなる', () => {
+    try {
+      execa.shellSync('iiopt images/illust.png')
+    } catch(error) {
+      expect(error.message).toMatch('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
+    }
   });
 });
 
