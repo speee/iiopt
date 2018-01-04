@@ -43,9 +43,12 @@ function run(input, opts){
       imageminMozjpeg({ progressive: true, quality: 85 })
     ]
   }).then(files => {
-    if (!opts.outDir && opts.overwrite) {
-      fs.writeFileSync(input, files[0].data);
-    }
+    files.forEach((file) => {
+      console.log(file);
+      if (!opts.outDir && opts.overwrite) {
+        fs.writeFileSync(input, file.data);
+      }
+    });
   });
 }
 
