@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "yarn tsc",
-    "test": "yarn jest"
+    "test": "yarn build && yarn jest"
   },
   "jest": {
     "transform": {
