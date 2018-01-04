@@ -8,7 +8,8 @@
     "iiopt": "build/cli.js"
   },
   "scripts": {
-    "build": "yarn tsc"
+    "build": "yarn tsc",
+    "test": "yarn jest"
   },
   "jest": {
     "transform": {
