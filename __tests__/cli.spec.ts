@@ -11,11 +11,7 @@ describe('help message', ()=>{
 
 describe('confirm flags and options of cli',()=>{
   beforeAll(() => {
-    child_process.execSync('mkdir tmp');
-  });
-
-  afterAll(() => {
-    child_process.execSync('rm -rf tmp');
+    child_process.execSync('rm -rf tmp && mkdir tmp');
   });
 
   test('output the compressed image to the path designated by --out-dir option', () => {
@@ -35,12 +31,9 @@ describe('confirm flags and options of cli',()=>{
 
 describe('overwrite images', () => {
   beforeAll(() => {
-    child_process.execSync('mkdir tmp && cp images/illust.png ./tmp/');
+    child_process.execSync('rm -rf tmp && mkdir tmp && cp images/illust.png ./tmp/');
   });
 
-  afterAll(() => {
-    child_process.execSync('rm -rf tmp');
-  });
   test("if --overwrite flag is set and --out-dir isn't set, a image is overwritten",() => {
     const rawImage = fs.readFileSync('tmp/illust.png');
     child_process.execSync('iiopt tmp/illust.png --overwrite');
@@ -51,11 +44,7 @@ describe('overwrite images', () => {
 
 describe('compress png images', () => {
   beforeAll(() => {
-    child_process.execSync('mkdir tmp');
-  });
-
-  afterAll(() => {
-    child_process.execSync('rm -rf tmp');
+    child_process.execSync('rm -rf tmp && mkdir tmp');
   });
 
   test('output the image to the path that --out-dir option set', () => {
@@ -69,11 +58,7 @@ describe('compress png images', () => {
 
 describe('compress jpg images', ()=> {
   beforeAll(() => {
-    child_process.execSync('mkdir tmp');
-  });
-
-  afterAll(() => {
-    child_process.execSync('rm -rf tmp');
+    child_process.execSync('rm -rf tmp && mkdir tmp');
   });
 
   test('output the image to the path that --out-dir option set', () => {
@@ -85,11 +70,7 @@ describe('compress jpg images', ()=> {
 
   describe('compress images with regexp', () => {
     beforeAll(() => {
-      child_process.execSync('mkdir tmp');
-    });
-
-    afterAll(() => {
-      child_process.execSync('rm -rf tmp');
+      child_process.execSync('rm -rf tmp && mkdir tmp');
     });
 
     test('output some images to tmp directory', () => {

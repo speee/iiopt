@@ -29,16 +29,11 @@ const cli = meow(`
 })
 
 function run(input, opts){
-  if ( !opts.outDir && !opts.overwrite ) {
-    console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
-    process.exit(1);
-  }
-
-  const images = glob.GlobSync(input).found.map((path) => {
+  const images = input.map((path) => {
     return new Image(path, fs.lstatSync(path).size)
   });
 
-  imagemin([input], opts.outDir, {
+  imagemin(input, opts.outDir, {
     plugins: [
       imageminPngquant({ quality: 85 }),
       imageminMozjpeg({ progressive: true, quality: 85 })
@@ -46,11 +41,7 @@ function run(input, opts){
   }).then(files => {
     files.forEach((file) => {
       if (!opts.outDir && opts.overwrite) {
-        if (files.length > 1 ){
-          console.error('only one image can overwrite');
-          process.exit(1);
-        }
-        fs.writeFileSync(input, file.data);
+        fs.writeFileSync(input[0], file.data);
       } else {
         const image = images.find((image) => {
           return path.basename(image.path) == path.basename(file.path);
@@ -66,4 +57,14 @@ function run(input, opts){
   });
 }
 
-run(cli.input[0], cli.flags);
+if ( !cli.flags.outDir && !cli.flags.overwrite ) {
+  console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
+  process.exit(1);
+}
+
+if (cli.input.length > 1 && cli.flags.overwrite){
+  console.error('only one image can overwrite');
+  process.exit(1);
+}
+
+run(cli.input, cli.flags);
