@@ -9,7 +9,7 @@ describe('help message', ()=>{
   });
 });
 
-describe('flag や optionの確認',()=>{
+describe('confirm flags and options of cli',()=>{
   beforeAll(() => {
     child_process.execSync('mkdir tmp');
   });
@@ -18,13 +18,13 @@ describe('flag や optionの確認',()=>{
     child_process.execSync('rm -rf tmp');
   });
 
-  test('--out-dir で指定されたpathに圧縮後の画像を出力する', () => {
+  test('output compressed images to the path designated by --out-dir option', () => {
     child_process.execSync('iiopt images/illust.png --out-dir tmp');
     const images = execa.shellSync('ls ./tmp');
     expect(images.stdout).toEqual('illust.png');
   });
 
-  test('--out-dir が指定されておらず、--overwrite flagも設定されていない場合、エラーとなる', () => {
+  test('raise error if both --out-dir option and --overwrite are not given.', () => {
     try {
       execa.shellSync('iiopt images/illust.png');
     } catch(error) {
@@ -33,7 +33,7 @@ describe('flag や optionの確認',()=>{
   });
 });
 
-describe('上書きの確認', () => {
+describe('overwrite images', () => {
   beforeAll(() => {
     child_process.execSync('mkdir tmp && cp images/illust.png ./tmp/');
   });
@@ -41,8 +41,7 @@ describe('上書きの確認', () => {
   afterAll(() => {
     child_process.execSync('rm -rf tmp');
   });
-
-  test('--out-dir が指定されておらず、--overwrite flagが設定された場合、画像を上書きする',() => {
+  test("if --overwrite flag is set and --out-dir isn't set, a image is overwritten",() => {
     const rawImage = fs.readFileSync('tmp/illust.png');
     child_process.execSync('iiopt tmp/illust.png --overwrite');
     const compressedImage = fs.readFileSync('tmp/illust.png');
@@ -55,16 +54,29 @@ describe('compress png images', () => {
     child_process.execSync('mkdir tmp');
   });
 
-  test('指定されたpathに圧縮後の画像を出力する', () => {
+  afterAll(() => {
+    child_process.execSync('rm -rf tmp');
+  });
+
+  test('output images to the path that --out-dir option set', () => {
     const rawImage = fs.readFileSync('images/illust.png');
+
     child_process.execSync('iiopt images/illust.png --out-dir tmp');
     const compressedImage = fs.readFileSync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
 
-describe('jpgの圧縮', ()=> {
-  test('指定されたpathに圧縮後の画像を出力する', () => {
+describe('compress jpg images', ()=> {
+  beforeAll(() => {
+    child_process.execSync('mkdir tmp');
+  });
+
+  afterAll(() => {
+    child_process.execSync('rm -rf tmp');
+  });
+
+  test('output images to the path that --out-dir option set', () => {
     const rawImage = fs.readFileSync('images/illust.png');
     child_process.execSync('iiopt images/illust.png --out-dir ./tmp');
     const compressedImage = fs.readFileSync('tmp/illust.png');
