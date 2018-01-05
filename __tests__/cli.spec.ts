@@ -18,7 +18,7 @@ describe('confirm flags and options of cli',()=>{
     child_process.execSync('rm -rf tmp');
   });
 
-  test('output compressed images to the path designated by --out-dir option', () => {
+  test('output the compressed image to the path designated by --out-dir option', () => {
     child_process.execSync('iiopt images/illust.png --out-dir tmp');
     const images = execa.shellSync('ls ./tmp');
     expect(images.stdout).toEqual('illust.png');
@@ -58,7 +58,7 @@ describe('compress png images', () => {
     child_process.execSync('rm -rf tmp');
   });
 
-  test('output images to the path that --out-dir option set', () => {
+  test('output the image to the path that --out-dir option set', () => {
     const rawImage = fs.readFileSync('images/illust.png');
 
     child_process.execSync('iiopt images/illust.png --out-dir tmp');
@@ -76,10 +76,31 @@ describe('compress jpg images', ()=> {
     child_process.execSync('rm -rf tmp');
   });
 
-  test('output images to the path that --out-dir option set', () => {
+  test('output the image to the path that --out-dir option set', () => {
     const rawImage = fs.readFileSync('images/illust.png');
     child_process.execSync('iiopt images/illust.png --out-dir ./tmp');
     const compressedImage = fs.readFileSync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
+  });
+
+  describe('compress images with regexp', () => {
+    beforeAll(() => {
+      child_process.execSync('mkdir tmp');
+    });
+
+    afterAll(() => {
+      child_process.execSync('rm -rf tmp');
+    });
+
+    test('output some images to tmp directory', () => {
+      const rawJpgImage = fs.readFileSync('images/sample.jpg');
+      const rawPngImage = fs.readFileSync('images/illust.png');
+      child_process.execSync('iiopt images/* --out-dir ./tmp/');
+      const compressedJpgImage = fs.readFileSync('tmp/sample.jpg');
+      const compressedPngImage = fs.readFileSync('tmp/illust.png');
+
+      expect(rawJpgImage.byteLength).toBeGreaterThan(compressedJpgImage.byteLength);
+      expect(rawPngImage.byteLength).toBeGreaterThan(compressedPngImage.byteLength);
+    });
   });
 });
