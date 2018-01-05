@@ -46,6 +46,10 @@ function run(input, opts){
   }).then(files => {
     files.forEach((file) => {
       if (!opts.outDir && opts.overwrite) {
+        if (files.length > 1 ){
+          console.error('only one image can overwrite');
+          process.exit(1);
+        }
         fs.writeFileSync(input, file.data);
       } else {
         const image = images.find((image) => {
