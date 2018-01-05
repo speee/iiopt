@@ -5,7 +5,7 @@
   "author": "shuhei.morioka",
   "license": "MIT",
   "bin": {
-    "iiopt": "build/cli.js"
+    "iiopt": "./bin/cli"
   },
   "scripts": {
     "build": "yarn tsc",
