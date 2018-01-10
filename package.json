@@ -1,13 +1,42 @@
 {
-  "name": "iiopt",
+  "name": "@speee/iiopt",
   "version": "1.0.0",
   "description": "(iikanji ni)nice image optimizer ",
-  "main": "build/index.js",
   "author": "shuhei.morioka",
   "license": "MIT",
+  "bin": {
+    "iiopt": "./bin/cli"
+  },
+  "scripts": {
+    "build": "yarn tsc",
+    "test": "yarn build && yarn jest",
+    "lint": "tslint 'src/**/*.ts'"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "modulePathIgnorePatterns": [
+      "/build/",
+      "/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  },
   "devDependencies": {
+    "@types/jest": "^21.1.10",
     "@types/node": "^8.5.2",
+    "execa": "^0.8.0",
+    "jest": "^22.0.4",
+    "ts-jest": "^22.0.0",
     "ts-node": "^4.1.0",
+    "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
   "dependencies": {

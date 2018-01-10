@@ -16,7 +16,8 @@
     "removeComments": true,
     "strictNullChecks": false,
     "target": "es5",
-    "traceResolution": false
+    "traceResolution": false,
+    "sourceMap": true
   },
   "include": [
     "src/*.*"
