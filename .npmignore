@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+yarn-error.log
+
+# for vscode
+.vscode
+
+# for MacOSX
+.DS_Store
+
+# for testing
+tmp
+
+# exclude .ts code
+src
