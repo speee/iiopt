@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as glob from 'glob';
 import { Image } from './image';
 import * as path from 'path';
+import * as Overwrite from './overwrite';
 
 const cli = meow(`
   Usage
@@ -40,14 +41,10 @@ function run(input, opts){
     ]
   }).then(files => {
     files.forEach((file) => {
-      if (!opts.outDir && opts.overwrite) {
-        fs.writeFileSync(input[0], file.data);
-      } else {
-        const image = images.find((image) => {
-          return path.basename(image.path) == path.basename(file.path);
-        });
-        image.afterSize = file.data.length
-      }
+      const image = images.find((image) => {
+        return path.basename(image.path) == path.basename(file.path);
+      });
+      image.afterSize = file.data.length
     });
     return images;
   }).then((images)=>{
@@ -67,4 +64,8 @@ if (cli.input.length > 1 && cli.flags.overwrite){
   process.exit(1);
 }
 
-run(cli.input, cli.flags);
+if (cli.flags.overwrite) {
+  Overwrite.run(cli.input[0], cli.flags);
+} else {
+  run(cli.input, cli.flags);
+}
