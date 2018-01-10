@@ -1,0 +1,8 @@
+# for vscode
+.vscode
+
+# for testing
+tmp
+
+# exclude .ts code
+src
