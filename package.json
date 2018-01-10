@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "yarn tsc",
-    "test": "yarn build && yarn jest"
+    "test": "yarn build && yarn jest",
+    "lint": "tslint 'src/**/*.ts'"
   },
   "jest": {
     "transform": {
