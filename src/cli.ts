@@ -7,7 +7,9 @@ const cli = meow(`
   Usage
     $ iiopt <file>
     $ iiopt <file> --out-dir <output>
+    $ iiopt --install-git-hooks
   Option
+    --install-git-hooks, install script that hooks git pre-commit to compress image automatically
     --overwrite, -o  overwrite images
   Example
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
@@ -18,9 +20,19 @@ const cli = meow(`
       type: 'boolean',
       alias: 'o',
       default: false
+    },
+    installGitHooks: {
+      type: 'boolean',
+      alias: 'i',
+      default: false
     }
   }
 });
+
+if (cli.flags.installGitHooks) {
+  console.log('install script that hooks git pre-commit to compress image automatically');
+  process.exit(0);
+}
 
 if (!cli.flags.outDir && !cli.flags.overwrite) {
   console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
