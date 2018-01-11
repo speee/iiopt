@@ -1,16 +1,26 @@
 {
   "name": "@speee/iiopt",
-  "version": "0.1.4",
   "description": "(iikanji ni)nice image optimizer ",
+  "version": "0.1.4",
   "author": "shuhei.morioka",
-  "license": "MIT",
   "bin": {
     "iiopt": "./bin/cli"
   },
-  "scripts": {
-    "build": "yarn tsc",
-    "test": "yarn build && yarn jest",
-    "lint": "tslint 'src/**/*.ts'"
+  "dependencies": {
+    "imagemin": "^5.3.1",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-pngquant": "^5.0.1",
+    "meow": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.10",
+    "@types/node": "^8.5.2",
+    "execa": "^0.8.0",
+    "jest": "^22.0.4",
+    "ts-jest": "^22.0.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
   },
   "jest": {
     "transform": {
@@ -29,20 +39,10 @@
       "json"
     ]
   },
-  "devDependencies": {
-    "@types/jest": "^21.1.10",
-    "@types/node": "^8.5.2",
-    "execa": "^0.8.0",
-    "jest": "^22.0.4",
-    "ts-jest": "^22.0.0",
-    "ts-node": "^4.1.0",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
-  },
-  "dependencies": {
-    "imagemin": "^5.3.1",
-    "imagemin-mozjpeg": "^6.0.0",
-    "imagemin-pngquant": "^5.0.1",
-    "meow": "^4.0.0"
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn tsc",
+    "lint": "tslint 'src/**/*.ts'",
+    "test": "yarn build && yarn jest"
   }
 }
