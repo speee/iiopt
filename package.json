@@ -1,7 +1,7 @@
 {
   "name": "@speee/iiopt",
   "description": "(iikanji ni)nice image optimizer ",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "shuhei.morioka",
   "bin": {
     "iiopt": "./bin/cli"
