@@ -54,7 +54,6 @@
     "pngquant"
   ],
   "license": "MIT",
-  "main": "./build/cli.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/speee/iiopt"

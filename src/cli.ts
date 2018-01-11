@@ -32,8 +32,10 @@ if (cli.input.length > 1 && cli.flags.overwrite) {
   process.exit(1);
 }
 
-if (cli.flags.overwrite) {
-  Overwrite.run(cli.input[0], cli.flags);
-} else {
-  Compression.run(cli.input, cli.flags);
+export function run() {
+  if (cli.flags.overwrite) {
+    Overwrite.run(cli.input[0], cli.flags);
+  } else {
+    Compression.run(cli.input, cli.flags);
+  }
 }
