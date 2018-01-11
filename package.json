@@ -6,6 +6,7 @@
   "bin": {
     "iiopt": "./bin/cli"
   },
+  "bugs": "https://github.com/speee/iiopt/issues",
   "dependencies": {
     "imagemin": "^5.3.1",
     "imagemin-mozjpeg": "^6.0.0",
@@ -22,6 +23,11 @@
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
+  "files": [
+    "build",
+    "bin"
+  ],
+  "homepage": "https://github.com/speee/iiopt",
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -39,7 +45,20 @@
       "json"
     ]
   },
+  "keywords": [
+    "image",
+    "jpeg",
+    "jpg",
+    "mozjpeg",
+    "png",
+    "pngquant"
+  ],
   "license": "MIT",
+  "main": "./build/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/speee/iiopt"
+  },
   "scripts": {
     "build": "yarn tsc",
     "lint": "tslint 'src/**/*.ts'",
