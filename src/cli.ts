@@ -12,6 +12,7 @@ const cli = meow(`
   Option
     --install-git-hooks, install script that hooks git pre-commit to compress image automatically
     --overwrite, -o  overwrite images
+    --apply-new-files, -a compress images before git commit.
   Example
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
@@ -26,6 +27,11 @@ const cli = meow(`
       type: 'boolean',
       alias: 'i',
       default: false
+    },
+    applyNewFiles: {
+      type: 'boolean',
+      alias: 'a',
+      default: false
     }
   }
 });
@@ -36,20 +42,20 @@ if (cli.flags.installGitHooks) {
   process.exit(0);
 }
 
-if (!cli.flags.outDir && !cli.flags.overwrite) {
-  console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
-  process.exit(1);
-}
-
-if (cli.input.length > 1 && cli.flags.overwrite) {
-  console.error('only one image can overwrite');
-  process.exit(1);
-}
-
 export function run() {
-  if (cli.flags.overwrite) {
+  if ( cli.flags.applyNewFiles ) {
+    console.log('applyNewFiles');
+  } else if (cli.flags.overwrite) {
+    if (cli.input.length > 1) {
+      console.error('only one image can overwrite');
+      process.exit(1);
+    }
     Overwrite.run(cli.input[0], cli.flags);
   } else {
+    if (!cli.flags.outDir) {
+      console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
+      process.exit(1);
+    }
     Compression.run(cli.input, cli.flags);
   }
 }
