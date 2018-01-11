@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import * as fs from 'fs';
 import * as meow from 'meow';
 import * as Overwrite from './overwrite';
 import * as Compression from './compression';
@@ -31,6 +32,7 @@ const cli = meow(`
 
 if (cli.flags.installGitHooks) {
   console.log('install script that hooks git pre-commit to compress image automatically');
+  fs.symlinkSync('bin/apply_new_files', '.git/hooks/pre-commit');
   process.exit(0);
 }
 
