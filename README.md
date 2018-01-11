@@ -6,7 +6,7 @@ In pngquant and mozjpeg compression level are fixed to 85.
 ## install
 
 ```
-$ npm install iiopt
+$ npm install @speee/iiopt
 ```
 
 ## Usage
@@ -31,8 +31,8 @@ $ iiopt --help
 Images used for sample are royalty-free.
 These images are borrowed from below site.
 
-http://www.irasutoya.com/
-http://en.freejpg.com.ar/
+- http://www.irasutoya.com/
+- http://en.freejpg.com.ar/
 
 ## License
 
