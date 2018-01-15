@@ -13,7 +13,7 @@ const cli = meow(`
   Option
     --install-git-hooks, install script that hooks git pre-commit to compress image automatically
     --overwrite, -o  overwrite images
-    --apply-new-files, -a compress images before git commit.
+    --apply-new-files, compress images before git commit.
   Example
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
@@ -26,12 +26,10 @@ const cli = meow(`
     },
     installGitHooks: {
       type: 'boolean',
-      alias: 'i',
       default: false
     },
     applyNewFiles: {
       type: 'boolean',
-      alias: 'a',
       default: false
     }
   }
