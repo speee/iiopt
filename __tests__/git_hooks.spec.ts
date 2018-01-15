@@ -1,15 +1,16 @@
 import fs from 'fs';
 import child_process from 'child_process';
 
+function unlink() {
+  try {
+    fs.unlinkSync('.git/hooks/pre-commit');
+  } catch (err) {}
+}
+
 
 describe('iiopt --install-git-hooks', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -f .git/hooks/pre-commit');
-  });
-
-  afterAll(() => {
-    child_process.execSync('rm -f .git/hooks/pre-commit');
-  });
+  beforeAll(() => unlink());
+  afterAll(() => unlink());
 
   test('add .git/hooks/pre-commit', () => {
     const beforeExist = fs.existsSync('.git/hooks/pre-commit');
@@ -23,15 +24,18 @@ describe('iiopt --install-git-hooks', () => {
 
 describe('iiopt --apply-new-files', () => {
   beforeAll(() => {
-    child_process.execSync('rm -f .git/hooks/pre-commit');
+    unlink();
     child_process.execSync('iiopt --install-git-hooks');
-    child_process.execSync('mkdir test_images');
+    try { fs.mkdirSync('test_images'); } catch (err) {}
   });
 
   afterAll(() => {
-    child_process.execSync('rm -f .git/hooks/pre-commit');
-    child_process.execSync('rm -rf test_images');
+    unlink();
     child_process.execSync('git reset HEAD test_images/illust.png');
+    // NOTE:
+    // nodejs (v6.10) don't have the function that can remove directory with files in its.
+    // So I remove test_images directory using child_process.execSync()
+    child_process.execSync('rm -rf test_images');
   });
 
   test('commited raw images are compressed', () => {
