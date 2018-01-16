@@ -28,23 +28,6 @@
     "bin"
   ],
   "homepage": "https://github.com/speee/iiopt",
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "modulePathIgnorePatterns": [
-      "/build/",
-      "/node_modules/"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ]
-  },
   "keywords": [
     "image",
     "jpeg",
@@ -62,6 +45,6 @@
     "build": "tsc -p ./config/tsconfig.json",
     "build:debug": "tsc -p ./config/tsconfig.debug.json",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "yarn build && yarn jest"
+    "test": "yarn build:debug && yarn jest --config=config/jest.json"
   }
 }
