@@ -1,0 +1,6 @@
+{
+  "version": "0.1.0",
+  "command": "yarn",
+  "isShellCommand": true,
+  "suppressTaskName": true
+}
