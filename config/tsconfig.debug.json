@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "outDir": "../debug_build/",
+    "removeComments": true,
+    "strictNullChecks": false,
+    "target": "es5",
+    "traceResolution": false,
+    "sourceMap": true
+  },
+  "include": [
+    "../src/*.*",
+    "../__tests__/**/*.ts"
+  ]
+}
