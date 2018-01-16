@@ -12,7 +12,7 @@
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngquant": "^5.0.1",
     "meow": "^4.0.0",
-    "simple-git": "types/simple-git"
+    "simple-git": "^1.85.0"
   },
   "devDependencies": {
     "@types/jest": "^21.1.10",

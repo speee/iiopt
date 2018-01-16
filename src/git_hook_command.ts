@@ -1,25 +1,20 @@
 import * as child_process from 'child_process';
 import * as git from 'simple-git/promise';
+import * as Overwrite from './overwrite';
 
-const ShellScript = `
-  for file in \`git diff --cached --name-status | awk '$1 ~ /[AM]/ && tolower($2) ~ /\.(jpe?g|png)$/ {print $2}' \`
-  do
-    iiopt $file -o
-    git add $file
-  done
-`;
+function diffImages() {
+  return git(process.cwd()).diffSummary();
+}
 
-export function run() {
-  child_process.exec(ShellScript, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return;
-    }
-
-    console.log(stdout);
+function compression(images, opts) {
+  images.forEach(image => {
+    Overwrite.run(image, opts);
   });
+}
+
+export async function run(opts) {
+  const res = await diffImages();
+  const images = res.files.filter((file) => /.png$|.jpg$/ig.test(file.file))
+                          .map(file => file.file);
+  await compression(images, opts);
 }

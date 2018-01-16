@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "lib": [
+      "es2015"
+    ],
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,

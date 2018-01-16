@@ -49,7 +49,7 @@ if (cli.flags.installGitHooks) {
 export function run() {
   if ( cli.flags.applyNewFiles ) {
     console.log('image compression via git pre-commit hook');
-    GitHookCommand.run();
+    GitHookCommand.run(cli.flags);
   } else if (cli.flags.overwrite) {
     if (cli.input.length > 1) {
       console.error('only one image can overwrite');

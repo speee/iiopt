@@ -41,7 +41,7 @@ describe('iiopt --apply-new-files', () => {
   test('commited raw images are compressed', () => {
     child_process.execSync('cp images/illust.png ./test_images/ && git add test_images/illust.png');
     const rawImage = fs.readFileSync('test_images/illust.png');
-    child_process.execSync('./bin/apply_new_files');
+    child_process.execSync('iiopt --apply-new-files');
     const compressedImage = fs.readFileSync('test_images/illust.png');
 
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);

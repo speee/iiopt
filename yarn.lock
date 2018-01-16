@@ -3429,10 +3429,6 @@ simple-git@^1.85.0:
   dependencies:
     debug "^3.1.0"
 
-simple-git@types/simple-git:
-  version "1.53.0"
-  resolved "https://codeload.github.com/types/simple-git/tar.gz/8d7775001d6af0946f1e59823cdb43659009b81c"
-
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
