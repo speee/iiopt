@@ -37,7 +37,12 @@ const cli = meow(`
 
 if (cli.flags.installGitHooks) {
   console.log('install script that hooks git pre-commit to compress image automatically');
-  fs.linkSync('bin/apply_new_files', '.git/hooks/pre-commit');
+
+  const script = `#!/bin/sh -e
+  npx iiopt --aply-newfiles
+  `;
+
+  fs.writeFileSync('.git/hooks/pre-commit', script);
   process.exit(0);
 }
 
