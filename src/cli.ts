@@ -10,7 +10,7 @@ const cli = meow(`
   Option
     --overwrite, -o  overwrite images
   Example
-    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
+    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images, and the results are stored into ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
 `, {
   flags: {
