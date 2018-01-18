@@ -13,8 +13,7 @@
         "config/jest.json"
       ],
       "cwd": "${workspaceRoot}",
-      "console": "integratedTerminal",
-      "sourceMaps": true
+      "console": "integratedTerminal"
     }
   ]
 }
