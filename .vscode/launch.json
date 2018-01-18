@@ -10,9 +10,7 @@
       "args": [
         "${file}",
         "--runInBand",
-        "--no-cache",
-        "--config",
-        "config/jest.json"
+        "--no-cache"
       ],
       "cwd": "${workspaceRoot}",
       "console": "integratedTerminal"

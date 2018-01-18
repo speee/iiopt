@@ -44,6 +44,6 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "yarn build && yarn jest --config config/jest.json"
+    "test": "yarn build && yarn jest"
   }
 }
