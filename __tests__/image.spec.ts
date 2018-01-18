@@ -1,4 +1,4 @@
-import { Image } from '../image';
+import { Image } from '../src/image';
 
 describe('constructer', () => {
   it('Image need filepath and filesize', () => {
