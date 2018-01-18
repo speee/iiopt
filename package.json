@@ -43,8 +43,7 @@
   },
   "scripts": {
     "build": "tsc -p ./config/tsconfig.json",
-    "build:debug": "tsc -p ./config/tsconfig.debug.json",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "yarn build:debug && yarn jest --config=config/jest.json"
+    "test": "yarn build && yarn jest --config=config/jest.json"
   }
 }
