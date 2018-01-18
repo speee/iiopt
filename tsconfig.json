@@ -12,7 +12,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "outDir": "../build/",
+    "outDir": "./build/",
     "removeComments": true,
     "strictNullChecks": false,
     "target": "es5",
