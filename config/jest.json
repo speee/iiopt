@@ -10,14 +10,11 @@
   },
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "modulePathIgnorePatterns": [
-    "/build/",
-    "/node_modules/"
+    "<rootDir>/build/"
   ],
   "moduleFileExtensions": [
     "ts",
-    "tsx",
     "js",
-    "jsx",
     "json"
   ]
 }
