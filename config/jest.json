@@ -1,9 +1,4 @@
 {
-  "globals": {
-    "ts-jest" :{
-      "tsConfigFile": "config/tsconfig.json"
-    }
-  },
   "rootDir": "../",
   "transform": {
     "^.+\\.tsx?$": "ts-jest"

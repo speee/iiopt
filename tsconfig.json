@@ -19,7 +19,7 @@
     "traceResolution": false
   },
   "include": [
-    "../**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "**/*.spec.ts"
