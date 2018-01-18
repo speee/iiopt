@@ -2,5 +2,11 @@
   "version": "0.1.0",
   "command": "yarn",
   "isShellCommand": true,
-  "suppressTaskName": true
+  "suppressTaskName": true,
+  "tasks": [
+    {
+      "taskName": "build",
+      "args": ["run", "build"]
+    }
+  ]
 }

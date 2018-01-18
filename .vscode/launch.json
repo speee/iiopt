@@ -5,6 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug Jest",
+      "preLaunchTask": "build",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": [
         "--runInBand",
