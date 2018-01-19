@@ -36,7 +36,12 @@ describe('iiopt --apply-new-files', () => {
   });
 
   test('commited raw images are compressed', () => {
-    child_process.execSync('cp images/illust.png ./test_images/ && git add test_images/illust.png');
+    // NOTE: fs.copyFile function is supported in node version 8.x
+    // we support node version larger than 6.x
+    const image = fs.readFileSync('images/illust.png');
+    fs.writeFileSync('./test_images/illust.png', image);
+
+    child_process.execSync('git add test_images/illust.png');
     const rawImage = fs.readFileSync('test_images/illust.png');
     child_process.execSync('bin/cli --apply-new-files');
     const compressedImage = fs.readFileSync('test_images/illust.png');
