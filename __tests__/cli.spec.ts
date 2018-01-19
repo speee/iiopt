@@ -29,19 +29,6 @@ describe('confirm flags and options of cli', () => {
   });
 });
 
-describe('overwrite images', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp && cp images/illust.png ./tmp/');
-  });
-
-  test("if --overwrite flag is set and --out-dir isn't set, a image is overwritten",() => {
-    const rawImage = fs.readFileSync('tmp/illust.png');
-    child_process.execSync('bin/cli tmp/illust.png --overwrite');
-    const compressedImage = fs.readFileSync('tmp/illust.png');
-    expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
-  });
-});
-
 describe('compress png images', () => {
   beforeAll(() => {
     child_process.execSync('rm -rf tmp && mkdir tmp');
