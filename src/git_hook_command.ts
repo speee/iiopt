@@ -1,5 +1,5 @@
 import * as child_process from 'child_process';
-import * as Overwrite from './overwrite';
+import * as Compression from './compression';
 
 function diffImages() {
   const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
@@ -8,16 +8,11 @@ function diffImages() {
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
-function compression(images, opts) {
-  return new Promise(resolve => {
-    images.forEach(image => {
-      Overwrite.run(image, opts);
-    });
-  });
-}
-
 export async function run(opts) {
   const images = diffImages();
-  await compression(images, opts);
+  const files = await Compression.compression(images, opts);
+  files.forEach(file => {
+    child_process.execSync(`git add ${file}`);
+  });
   console.log('image compressed');
 }
