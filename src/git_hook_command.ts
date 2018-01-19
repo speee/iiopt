@@ -1,9 +1,11 @@
 import * as child_process from 'child_process';
-import * as git from 'simple-git/promise';
 import * as Overwrite from './overwrite';
 
 function diffImages() {
-  return git(process.cwd()).diffSummary();
+  const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
+  // NOTE: Extract images that are added or modified
+  return results.filter((file) => /.png$|.jpg$/ig.test(file))
+                .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
 function compression(images, opts) {
@@ -13,8 +15,7 @@ function compression(images, opts) {
 }
 
 export async function run(opts) {
-  const res = await diffImages();
-  const images = res.files.filter((file) => /.png$|.jpg$/ig.test(file.file))
-                          .map(file => file.file);
-  await compression(images, opts);
+  const res = diffImages();
+  await compression(res, opts);
+  console.log('compressed');
 }

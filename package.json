@@ -11,8 +11,7 @@
     "imagemin": "^5.3.1",
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngquant": "^5.0.1",
-    "meow": "^4.0.0",
-    "simple-git": "^1.85.0"
+    "meow": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^21.1.10",

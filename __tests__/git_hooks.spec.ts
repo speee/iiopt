@@ -32,9 +32,6 @@ describe('iiopt --apply-new-files', () => {
   afterAll(() => {
     unlink();
     child_process.execSync('git reset HEAD test_images/illust.png');
-    // NOTE:
-    // nodejs (v6.10) don't have the function that can remove directory with files in its.
-    // So I remove test_images directory using child_process.execSync()
     child_process.execSync('rm -rf test_images');
   });
 
