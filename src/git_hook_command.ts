@@ -8,14 +8,16 @@ function diffImages() {
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
-function compression(images, opts) {
+async function compression(images, opts) {
   images.forEach(image => {
     Overwrite.run(image, opts);
   });
 }
 
 export async function run(opts) {
-  const res = diffImages();
-  await compression(res, opts);
-  console.log('compressed');
+  const images = diffImages();
+  await compression(images, opts);
+  const addImages = images.join(' ');
+  child_process.execSync(`git add ${addImages}`);
+  console.log('image compressed');
 }
