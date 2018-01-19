@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import * as meow from 'meow';
 import * as Overwrite from './overwrite';
-import * as Compression from './compression';
+import * as OutDir from './out_dir';
 import * as GitHookCommand from './git_hook_command';
 
 const cli = meow(`
@@ -62,6 +62,6 @@ export function run() {
       console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
       process.exit(1);
     }
-    Compression.run(cli.input, cli.flags);
+    OutDir.run(cli.input, cli.flags);
   }
 }
