@@ -5,8 +5,6 @@ npm-debug.log
 yarn-error.log
 
 .DS_Store
-tmp/
-
-# ignore builded code
 build
-debug_build
+
+tmp/
