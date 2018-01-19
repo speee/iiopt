@@ -1,8 +1,7 @@
 import * as fs from 'fs';
 import * as glob from 'glob';
-import { Image } from './image';
 import * as path from 'path';
-import { resolve } from 'url';
+import { Image } from './image';
 import * as Compression from './compression';
 
 export async function run(input, opts) {
