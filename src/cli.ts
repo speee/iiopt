@@ -49,7 +49,6 @@ if (cli.flags.installGitHooks) {
 
 export function run() {
   if ( cli.flags.applyNewFiles ) {
-    console.log('image compression via git pre-commit hook');
     ApplyNewFiles.run(cli.flags);
   } else if (cli.flags.overwrite) {
     if (cli.input.length > 1) {

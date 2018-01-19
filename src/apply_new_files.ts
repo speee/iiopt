@@ -12,6 +12,9 @@ function diffImages() {
 
 export function run(opts) {
   const images = diffImages();
+  if (images.length === 0 ) {
+    process.exit(0);
+  }
 
   images.forEach( async (imagePath) => {
     const image = new Image(imagePath, fs.lstatSync(imagePath).size);
