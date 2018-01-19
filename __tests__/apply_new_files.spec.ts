@@ -12,12 +12,12 @@ describe('iiopt --apply-new-files', () => {
   beforeAll(() => {
     unlink();
     child_process.execSync('bin/cli --install-git-hooks');
-    try { fs.mkdirSync('test_images'); } catch (err) {}
+    try { fs.mkdirSync('./test_images'); } catch (err) {}
   });
 
   afterAll(() => {
     unlink();
-    child_process.execSync('git reset HEAD test_images/illust.png');
+    child_process.execSync('git reset HEAD test_images/sample.jpg');
     child_process.execSync('rm -rf test_images');
   });
 

@@ -1,5 +1,7 @@
 import * as child_process from 'child_process';
 import * as Compression from './compression';
+import * as fs from 'fs';
+import { Image } from './image';
 
 function diffImages() {
   const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
@@ -8,11 +10,18 @@ function diffImages() {
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
-export async function run(opts) {
+export function run(opts) {
   const images = diffImages();
-  const files = await Compression.compression(images, opts);
-  files.forEach(file => {
-    child_process.execSync(`git add ${file.path}`);
+
+  images.forEach( async (imagePath) => {
+    const image = new Image(imagePath, fs.lstatSync(imagePath).size);
+    const files = await Compression.compression([imagePath], opts);
+
+    fs.writeFileSync(imagePath, files[0].data);
+    image.afterSize = files[0].data.length;
+    child_process.execSync(`git add ${imagePath}`);
+    console.log(image.compressionReport());
   });
+
   console.log('image compressed');
 }
