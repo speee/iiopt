@@ -43,7 +43,7 @@ if (cli.flags.installGitHooks) {
   `;
 
   fs.writeFileSync('.git/hooks/pre-commit', script);
-  fs.chmodSync('.git/hooks/pre-commit', 755);
+  fs.chmodSync('.git/hooks/pre-commit', '755');
   process.exit(0);
 }
 
