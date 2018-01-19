@@ -12,7 +12,7 @@ export async function run(opts) {
   const images = diffImages();
   const files = await Compression.compression(images, opts);
   files.forEach(file => {
-    child_process.execSync(`git add ${file}`);
+    child_process.execSync(`git add ${file.path}`);
   });
   console.log('image compressed');
 }

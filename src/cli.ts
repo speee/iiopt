@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as meow from 'meow';
 import * as Overwrite from './overwrite';
 import * as OutDir from './out_dir';
-import * as GitHookCommand from './git_hook_command';
+import * as ApplyNewFiles from './apply_new_files';
 
 const cli = meow(`
   Usage
@@ -50,7 +50,7 @@ if (cli.flags.installGitHooks) {
 export function run() {
   if ( cli.flags.applyNewFiles ) {
     console.log('image compression via git pre-commit hook');
-    GitHookCommand.run(cli.flags);
+    ApplyNewFiles.run(cli.flags);
   } else if (cli.flags.overwrite) {
     if (cli.input.length > 1) {
       console.error('only one image can overwrite');
