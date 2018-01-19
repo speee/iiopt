@@ -16,7 +16,7 @@ describe('iiopt --install-git-hooks', () => {
     const beforeExist = fs.existsSync('.git/hooks/pre-commit');
     expect(beforeExist).toBeFalsy();
 
-    child_process.execSync('iiopt --install-git-hooks');
+    child_process.execSync('bin/cli --install-git-hooks');
     const afterExist = fs.existsSync('.git/hooks/pre-commit');
     expect(afterExist).toBeTruthy();
   });
@@ -25,7 +25,7 @@ describe('iiopt --install-git-hooks', () => {
 describe('iiopt --apply-new-files', () => {
   beforeAll(() => {
     unlink();
-    child_process.execSync('iiopt --install-git-hooks');
+    child_process.execSync('bin/cli --install-git-hooks');
     try { fs.mkdirSync('test_images'); } catch (err) {}
   });
 
@@ -41,9 +41,8 @@ describe('iiopt --apply-new-files', () => {
   test('commited raw images are compressed', () => {
     child_process.execSync('cp images/illust.png ./test_images/ && git add test_images/illust.png');
     const rawImage = fs.readFileSync('test_images/illust.png');
-    child_process.execSync('iiopt --apply-new-files');
+    child_process.execSync('bin/cli --apply-new-files');
     const compressedImage = fs.readFileSync('test_images/illust.png');
-
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
