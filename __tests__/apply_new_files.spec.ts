@@ -1,5 +1,6 @@
 import fs from 'fs';
 import child_process from 'child_process';
+import * as ApplyNewFiles from '../src/apply_new_files';
 
 function unlink() {
   try {

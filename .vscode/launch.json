@@ -9,8 +9,7 @@
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": [
         "${file}",
-        "--runInBand",
-        "--no-cache"
+        "--runInBand"
       ],
       "cwd": "${workspaceRoot}",
       "console": "integratedTerminal"

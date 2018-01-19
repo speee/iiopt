@@ -10,16 +10,6 @@ describe('help message', () => {
 });
 
 describe('confirm flags and options of cli', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp');
-  });
-
-  test('output the compressed image to the path designated by --out-dir option', () => {
-    child_process.execSync('bin/cli images/illust.png --out-dir tmp');
-    const images = execa.shellSync('ls ./tmp');
-    expect(images.stdout).toEqual('illust.png');
-  });
-
   test('raise error if both --out-dir option and --overwrite are not given.', () => {
     try {
       execa.shellSync('bin/cli images/illust.png');
@@ -36,7 +26,6 @@ describe('compress png images', () => {
 
   test('output the image to the path that --out-dir option set', () => {
     const rawImage = fs.readFileSync('images/illust.png');
-
     child_process.execSync('bin/cli images/illust.png --out-dir tmp');
     const compressedImage = fs.readFileSync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
