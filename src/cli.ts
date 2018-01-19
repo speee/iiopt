@@ -39,7 +39,7 @@ if (cli.flags.installGitHooks) {
   console.log('install script that hooks git pre-commit to compress image automatically');
 
   const script = `#!/bin/sh -e
-  npx iiopt --aply-newfiles
+  npx iiopt --apply-new-files
   `;
 
   fs.writeFileSync('.git/hooks/pre-commit', script);
