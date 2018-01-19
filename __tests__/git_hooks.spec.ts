@@ -38,13 +38,12 @@ describe('iiopt --apply-new-files', () => {
   test('commited raw images are compressed', () => {
     // NOTE: fs.copyFile function is supported in node version 8.x
     // we support node version larger than 6.x
-    const image = fs.readFileSync('images/illust.png');
-    fs.writeFileSync('./test_images/illust.png', image);
-
-    child_process.execSync('git add test_images/illust.png');
-    const rawImage = fs.readFileSync('test_images/illust.png');
+    const image = fs.readFileSync('images/sample.jpg');
+    fs.writeFileSync('./test_images/sample.jpg', image);
+    child_process.execSync('git add test_images/sample.jpg');
+    const rawImage = fs.readFileSync('test_images/sample.jpg');
     child_process.execSync('bin/cli --apply-new-files');
-    const compressedImage = fs.readFileSync('test_images/illust.png');
+    const compressedImage = fs.readFileSync('test_images/sample.jpg');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
