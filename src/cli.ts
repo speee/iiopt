@@ -15,7 +15,7 @@ const cli = meow(`
     --overwrite, -o  overwrite images
     --apply-new-files, compress images before git commit.
   Example
-    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images are outputed to ./compressed directory
+    $ iiopt images/sample.jpg --out-dir ./compressed # compressed images, and the results are stored into ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
 `, {
   flags: {
