@@ -16,14 +16,12 @@
     "removeComments": true,
     "strictNullChecks": false,
     "target": "es5",
-    "traceResolution": false,
-    "sourceMap": true
+    "traceResolution": false
   },
   "include": [
-    "src/*.*"
+    "**/*.ts"
   ],
   "exclude": [
-    "node_modules",
     "**/*.spec.ts"
   ]
 }

@@ -2,14 +2,14 @@ import fs from 'fs';
 import execa from 'execa';
 import child_process from 'child_process';
 
-describe('help message', ()=>{
+describe('help message', () => {
   test('show help screen', () => {
     const helpMessage = execa.shellSync('iiopt --help');
     expect(helpMessage.stdout).toMatch(/nice/);
   });
 });
 
-describe('confirm flags and options of cli',()=>{
+describe('confirm flags and options of cli', () => {
   beforeAll(() => {
     child_process.execSync('rm -rf tmp && mkdir tmp');
   });
@@ -23,7 +23,7 @@ describe('confirm flags and options of cli',()=>{
   test('raise error if both --out-dir option and --overwrite are not given.', () => {
     try {
       execa.shellSync('iiopt images/illust.png');
-    } catch(error) {
+    } catch (error) {
       expect(error.message).toMatch('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
     }
   });
@@ -56,7 +56,7 @@ describe('compress png images', () => {
   });
 });
 
-describe('compress jpg images', ()=> {
+describe('compress jpg images', () => {
   beforeAll(() => {
     child_process.execSync('rm -rf tmp && mkdir tmp');
   });
