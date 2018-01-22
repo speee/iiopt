@@ -3,15 +3,14 @@ import * as Compression from './compression';
 import * as fs from 'fs';
 import { Image } from './image';
 
-function diffImages() {
+function extractAddedOrModifiedImageFiles() {
   const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
-  // NOTE: Extract images that are added or modified
   return results.filter((file) => /.png$|.jpg$/ig.test(file))
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
 export function run(opts) {
-  const images = diffImages();
+  const images = extractAddedOrModifiedImageFiles();
   if (images.length === 0 ) {
     process.exit(0);
   }
