@@ -1,5 +1,5 @@
 import * as child_process from 'child_process';
-import * as Compression from './compression';
+import { optimize } from './optimizer';
 import * as fs from 'fs';
 import { Image } from './image';
 
@@ -17,7 +17,7 @@ export function run(opts) {
 
   images.forEach( async (imagePath) => {
     const image = new Image(imagePath, fs.lstatSync(imagePath).size);
-    const files = await Compression.compression([imagePath], opts);
+    const files = await optimize([imagePath], opts);
 
     fs.writeFileSync(imagePath, files[0].data);
     image.afterSize = files[0].data.length;

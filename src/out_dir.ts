@@ -2,14 +2,14 @@ import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import { Image } from './image';
-import * as Compression from './compression';
+import { optimize } from './optimizer';
 
 export async function run(input, opts) {
   const images = input.map((imagePath) => {
     return new Image(imagePath, fs.lstatSync(imagePath).size);
   });
 
-  const files = await Compression.compression(input, opts);
+  const files = await optimize(input, opts);
 
   files.forEach((file) => {
     const compressedImage = images.find(image => {
