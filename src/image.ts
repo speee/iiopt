@@ -15,4 +15,8 @@ export class Image {
     after file size: ${this.afterSize}
     `;
   }
+
+  isPng() {
+    return true;
+  }
 }
