@@ -14,6 +14,12 @@ describe('compress png images', () => {
   });
 });
 
+describe('optimize png images that has been optimized', () => {
+  xtest('skip optimized image', () => {
+
+  });
+});
+
 describe('compress jpg images', () => {
   beforeAll(() => {
     child_process.execSync('rm -rf tmp && mkdir tmp');
