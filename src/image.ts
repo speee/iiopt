@@ -1,11 +1,13 @@
+import * as fs from 'fs';
+
 export class Image {
   public readonly path: string;
   private readonly beforeSize: number;
   afterSize: number;
 
-  constructor(path, beforeSize) {
+  constructor(path) {
     this.path = path;
-    this.beforeSize = beforeSize;
+    this.beforeSize = fs.lstatSync(path).size;
   }
 
   compressionReport() {

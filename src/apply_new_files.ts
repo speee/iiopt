@@ -16,7 +16,7 @@ export function run(opts) {
   }
 
   images.forEach( async (imagePath) => {
-    const image = new Image(imagePath, fs.lstatSync(imagePath).size);
+    const image = new Image(imagePath);
     const files = await optimize([imagePath], opts);
 
     fs.writeFileSync(imagePath, files[0].data);

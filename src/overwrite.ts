@@ -5,7 +5,7 @@ import { optimize } from './optimizer';
 
 export async function run(input, opts) {
   const imagePath = input[0];
-  const image = new Image(imagePath, fs.lstatSync(imagePath).size);
+  const image = new Image(imagePath);
   const files = await optimize([imagePath], opts);
   fs.writeFileSync(imagePath, files[0].data);
   image.afterSize = files[0].data.length;

@@ -5,10 +5,7 @@ import { Image } from './image';
 import { optimize } from './optimizer';
 
 export async function run(input, opts) {
-  const images = input.map((imagePath) => {
-    return new Image(imagePath, fs.lstatSync(imagePath).size);
-  });
-
+  const images = input.map((imagePath) => new Image(imagePath));
   const files = await optimize(input, opts);
 
   files.forEach((file) => {
