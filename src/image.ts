@@ -39,11 +39,11 @@ export class Image {
 
   // NOTE:
   // Currently, only Png image can discriminate, whether it have been optimized.
-  needsToOptimize(): boolean {
+  isOptimized(): boolean {
     if (this.isPng()) {
-      return !this.isPaletteIndex();
+      return this.isPaletteIndex();
     } else if (this.isJpg()) {
-      return true;
+      return false;
     } else {
       process.exit(1);
       return false;

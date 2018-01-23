@@ -1,5 +1,6 @@
 import fs from 'fs';
 import child_process from 'child_process';
+import { run } from '../src/out_dir';
 
 describe('compress png images', () => {
   beforeAll(() => {
@@ -15,8 +16,15 @@ describe('compress png images', () => {
 });
 
 describe('optimize png images that has been optimized', () => {
-  xtest('skip optimized image', () => {
+  beforeAll(() => {
+    child_process.execSync('rm -rf tmp && mkdir tmp');
+  });
 
+  test('skip optimized image', () => {
+    const imagePath = 'images/illust_optimized.png';
+    const optimizedImage = fs.readFileSync(imagePath);
+    child_process.execSync('bin/cli images/illust.png --out-dir tmp');
+    expect(fs.existsSync('tmp/illust_optimized.png')).toBeFalsy();
   });
 });
 

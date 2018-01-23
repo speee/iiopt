@@ -20,12 +20,12 @@ describe('constructer', () => {
 describe('PNG Image needsToOptimize', () => {
   it('if optimized png image is given', () => {
     const image = new Image('./images/illust.png');
-    expect(image.needsToOptimize()).toBeTruthy();
+    expect(image.isOptimized()).toBeFalsy();
   });
 
   it('if not optimized png image is given', () => {
     const image = new Image('./tmp/illust.png');
-    expect(image.needsToOptimize()).toBeFalsy();
+    expect(image.isOptimized()).toBeTruthy();
   });
 });
 
