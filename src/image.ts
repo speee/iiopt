@@ -19,6 +19,6 @@ export class Image {
   }
 
   isPng() {
-    return true;
+    return /.png$/.test(this.path);
   }
 }
