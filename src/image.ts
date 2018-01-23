@@ -21,4 +21,23 @@ export class Image {
   isPng() {
     return /.png$/.test(this.path);
   }
+
+  isJpg() {
+    return /.jpg$/.test(this.path);
+  }
+
+  IsPaletteIndex(): boolean {
+    return true;
+  }
+
+  needsToOptimize(): boolean {
+    if (this.isPng()) {
+      return this.IsPaletteIndex();
+    } else if (this.isJpg()) {
+      return true;
+    } else {
+      process.exit(1);
+      return false;
+    }
+  }
 }
