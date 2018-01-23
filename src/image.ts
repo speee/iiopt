@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { PNG } from 'pngjs';
 
 export class Image {
   public readonly path: string;
@@ -26,13 +27,21 @@ export class Image {
     return /.jpg$/.test(this.path);
   }
 
-  IsPaletteIndex(): boolean {
-    return true;
+  // NOTE:
+  // If this function returns true value, the image is already optimized.
+  // see https://www.w3.org/TR/PNG-Chunks.html
+  isPaletteIndex(): boolean {
+    const data = fs.readFileSync(this.path);
+    const png = new PNG.sync.read(data);
+    const colorType = png.colorType;
+    return colorType === 3;
   }
 
+  // NOTE:
+  // Currently, only Png image can discriminate, whether it have been optimized.
   needsToOptimize(): boolean {
     if (this.isPng()) {
-      return this.IsPaletteIndex();
+      return !this.isPaletteIndex();
     } else if (this.isJpg()) {
       return true;
     } else {
