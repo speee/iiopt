@@ -45,6 +45,6 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "yarn build && yarn jest"
+    "test": "yarn build && yarn jest --runInBand"
   }
 }

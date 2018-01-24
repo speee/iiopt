@@ -2,6 +2,7 @@ import * as child_process from 'child_process';
 import { optimize } from './optimizer';
 import * as fs from 'fs';
 import { Image } from './image';
+import { RawImageExtractor } from './raw_image_extractor';
 
 function extractAddedOrModifiedImageFiles() {
   const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
@@ -10,13 +11,14 @@ function extractAddedOrModifiedImageFiles() {
 }
 
 export function run(opts) {
-  const images = extractAddedOrModifiedImageFiles();
+  const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
   if (images.length === 0 ) {
     process.exit(0);
   }
 
-  images.forEach( async (imagePath) => {
-    const image = new Image(imagePath);
+  const rawImagePaths = new RawImageExtractor(images).extract();
+  rawImagePaths.forEach( async (imagePath) => {
+    const image = images.find((e) => e.path === imagePath);
     const files = await optimize([imagePath], opts);
 
     fs.writeFileSync(imagePath, files[0].data);
