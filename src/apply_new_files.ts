@@ -10,7 +10,7 @@ function extractAddedOrModifiedImageFiles() {
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
-export function run(opts) {
+export async function run(opts) {
   const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
   if (images.length === 0 ) {
     process.exit(0);
@@ -21,9 +21,12 @@ export function run(opts) {
     const image = images.find((e) => e.path === imagePath);
     const files = await optimize([imagePath], opts);
 
-    fs.writeFileSync(imagePath, files[0].data);
-    image.afterSize = files[0].data.length;
-    child_process.execSync(`git add ${imagePath}`);
+    await fs.writeFile(imagePath, files[0].data, (err) => {
+      if (err) { throw err; }
+      image.afterSize = files[0].data.length;
+    });
+
+    await child_process.exec(`git add ${imagePath}`);
     console.log(image.compressionReport());
   });
 
