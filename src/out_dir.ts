@@ -3,20 +3,11 @@ import * as glob from 'glob';
 import * as path from 'path';
 import { Image } from './image';
 import { optimize } from './optimizer';
+import { RawImageExtractor } from './raw_image_extractor';
 
 export async function run(input, opts) {
   const images = input.map((imagePath) => new Image(imagePath));
-  const optimizedImagePaths = images.filter((image) => image.isOptimized()).map((image) => image.path);
-
-  const rawImagePaths = input.filter((imagePath) => {
-    if (optimizedImagePaths.includes(imagePath)) {
-      console.error(`${imagePath} is already optimized`);
-      return false;
-    } else {
-      return true;
-    }
-  });
-
+  const rawImagePaths = new RawImageExtractor(images, input).extract();
   const files = await optimize(rawImagePaths, opts);
   files.forEach((file) => {
     const compressedImage = images.find(image => {
