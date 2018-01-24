@@ -23,9 +23,9 @@ export async function run(opts) {
 
     await fs.writeFile(imagePath, files[0].data, (err) => {
       if (err) { throw err; }
-      image.afterSize = files[0].data.length;
     });
 
+    image.afterSize = files[0].data.length;
     await child_process.exec(`git add ${imagePath}`);
     console.log(image.compressionReport());
   });

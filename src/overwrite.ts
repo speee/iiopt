@@ -9,7 +9,10 @@ export async function run(input, opts) {
   const image = new Image(imagePath);
   const rawImagePaths = new RawImageExtractor([image]).extract();
   const files = await optimize(rawImagePaths, opts);
-  fs.writeFileSync(imagePath, files[0].data);
+
+  await fs.writeFile(imagePath, files[0].data, (err) => {
+    if (err) { throw err; }
+  });
   image.afterSize = files[0].data.length;
   console.log(image.compressionReport());
 }
