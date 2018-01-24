@@ -7,8 +7,7 @@ import { RawImageExtractor } from './raw_image_extractor';
 export async function run(input, opts) {
   const imagePath = input[0];
   const image = new Image(imagePath);
-  const rawImagePaths = new RawImageExtractor([image], [imagePath]).extract();
-
+  const rawImagePaths = new RawImageExtractor([image]).extract();
   const files = await optimize(rawImagePaths, opts);
   fs.writeFileSync(imagePath, files[0].data);
   image.afterSize = files[0].data.length;

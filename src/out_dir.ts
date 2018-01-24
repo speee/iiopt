@@ -7,8 +7,9 @@ import { RawImageExtractor } from './raw_image_extractor';
 
 export async function run(input, opts) {
   const images = input.map((imagePath) => new Image(imagePath));
-  const rawImagePaths = new RawImageExtractor(images, input).extract();
+  const rawImagePaths = new RawImageExtractor(images).extract();
   const files = await optimize(rawImagePaths, opts);
+
   files.forEach((file) => {
     const compressedImage = images.find(image => {
       return path.basename(image.path) === path.basename(file.path);

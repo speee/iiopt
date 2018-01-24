@@ -21,7 +21,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Running tests
-          command: yarn test
+          command: yarn test --runInBand
       - run:
           name: Running lint
           command: yarn lint

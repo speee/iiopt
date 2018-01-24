@@ -6,9 +6,8 @@ describe('extract png images', () => {
   it('only raw images are extracted', () => {
     const rawImagePath = './images/illust.png';
     const optimizedImagePath = './images/illust_optimized.png';
-    const imagePaths = [rawImagePath, optimizedImagePath];
-    const images = imagePaths.map((path) => new Image(path));
-    const extractor = new RawImageExtractor(images, imagePaths);
+    const images = [rawImagePath, optimizedImagePath].map((path) => new Image(path));
+    const extractor = new RawImageExtractor(images);
     expect(extractor.extract()).toEqual([rawImagePath]);
   });
 });
