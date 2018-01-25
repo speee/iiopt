@@ -76,6 +76,8 @@ export function run() {
       console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
       process.exit(1);
     }
-    OutDir.run(cli.input, cli.flags);
+    OutDir.run(cli.input, cli.flags)
+      .then((res) => res.forEach((report) => console.log(report)))
+      .catch((err) => console.log(err));
   }
 }
