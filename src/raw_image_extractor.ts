@@ -7,8 +7,16 @@ export class RawImageExtractor {
     this.images = images;
   }
 
-  extract(): string[] {
-    const optimizedImagePaths = this.images.filter((image) => image.isOptimized()).map((image) => image.path);
+  async optimizedImages(): Promise<string[]> {
+    return await
+      Promise.all(this.images.map(async (im) => (await im.isOptimized()) ? im : null))
+        .then(images => images.filter(im => im !== null))
+        .then((images) => images.map(image => image.path));
+  }
+
+  async extract(): Promise<string[]> {
+    const optimizedImagePaths = await this.optimizedImages();
+    console.log(optimizedImagePaths);
     const rawImages = this.images.filter((image) => !optimizedImagePaths.includes(image.path));
     return rawImages.map((image) => image.path);
   }

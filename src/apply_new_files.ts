@@ -10,12 +10,12 @@ function extractAddedOrModifiedImageFiles() {
                 .map((file) => file.replace(/^[A|M]\t/, ''));
 }
 
-export function run(opts) {
+export async function run(opts) {
   return new Promise<string[]>( async (resolve, reject) => {
     const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
     if (images.length === 0 ) { return ''; }
 
-    const rawImagePaths = new RawImageExtractor(images).extract();
+    const rawImagePaths = await new RawImageExtractor(images).extract();
     if (rawImagePaths.length === 0) {
       return reject('There are no images to optimize');
     }

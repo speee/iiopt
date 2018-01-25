@@ -5,10 +5,10 @@ import { Image } from './image';
 import { optimize } from './optimizer';
 import { RawImageExtractor } from './raw_image_extractor';
 
-export function run(input, opts) {
+export async function run(input, opts) {
   return new Promise<string[]>( async (resolve, reject) => {
     const images = input.map((imagePath) => new Image(imagePath));
-    const rawImagePaths = new RawImageExtractor(images).extract();
+    const rawImagePaths = await new RawImageExtractor(images).extract();
     if (rawImagePaths.length === 0) {
       return reject('There are no images to optimize');
     }
