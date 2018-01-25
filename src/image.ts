@@ -30,23 +30,25 @@ export class Image {
   // NOTE:
   // If this function returns true value, the image is already optimized.
   // see https://www.w3.org/TR/PNG-Chunks.html
-  isPaletteIndex(): boolean {
-    const data = fs.readFileSync(this.path);
-    const png = new PNG.sync.read(data);
-    const colorType = png.colorType;
-    return colorType === 3;
+  isPaletteIndex() {
+    return new Promise<boolean>((resolve, err) => {
+      const png = new PNG();
+      png.on('metadata', function(metadata) {
+        resolve(metadata.palette);
+      });
+      fs.createReadStream(this.path).pipe(png);
+    });
   }
 
   // NOTE:
   // Currently, only Png image can discriminate, whether it have been optimized.
-  isOptimized(): boolean {
+  async isOptimized() {
     if (this.isPng()) {
-      return this.isPaletteIndex();
+      return await this.isPaletteIndex();
     } else if (this.isJpg()) {
       return false;
     } else {
-      process.exit(1);
-      return false;
+       throw new Error('hogehoge');
     }
   }
 }

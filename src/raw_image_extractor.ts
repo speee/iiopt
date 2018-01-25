@@ -16,7 +16,6 @@ export class RawImageExtractor {
 
   async extract(): Promise<string[]> {
     const optimizedImagePaths = await this.optimizedImages();
-    console.log(optimizedImagePaths);
     const rawImages = this.images.filter((image) => !optimizedImagePaths.includes(image.path));
     return rawImages.map((image) => image.path);
   }

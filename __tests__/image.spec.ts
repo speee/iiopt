@@ -9,14 +9,14 @@ describe('constructer', () => {
 });
 
 describe('PNG Image needsToOptimize', () => {
-  it('if optimized png image is given', () => {
+  it('if optimized png image is given', async () => {
     const image = new Image('./images/illust.png');
-    expect(image.isOptimized()).toBeFalsy();
+    await expect(image.isOptimized()).resolves.toBeFalsy();
   });
 
-  it('if not optimized png image is given', () => {
+  it('if not optimized png image is given', async () => {
     const image = new Image('./images/illust_optimized.png');
-    expect(image.isOptimized()).toBeTruthy();
+    await expect(image.isOptimized()).resolves.toBeTruthy();
   });
 });
 
