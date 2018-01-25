@@ -68,7 +68,9 @@ export function run() {
       console.error('only one image can overwrite');
       process.exit(1);
     }
-    Overwrite.run(cli.input, cli.flags);
+    Overwrite.run(cli.input, cli.flags)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   } else {
     if (!cli.flags.outDir) {
       console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
