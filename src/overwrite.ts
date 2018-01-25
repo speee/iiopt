@@ -8,8 +8,12 @@ export async function run(input, opts) {
   const imagePath = input[0];
   const image = new Image(imagePath);
   const rawImagePaths = new RawImageExtractor([image]).extract();
-  const files = await optimize(rawImagePaths, opts);
 
+  if (rawImagePaths.length === 0) {
+    return console.info('There are no images to need optimizing');
+  }
+
+  const files = await optimize(rawImagePaths, opts);
   await fs.writeFile(imagePath, files[0].data, (err) => {
     if (err) { throw err; }
   });
