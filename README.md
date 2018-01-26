@@ -5,6 +5,16 @@ The compression levels in these tools are fixed to 85.
 
 ## Install
 
+
+iiopt needs [imagemagick](http://www.imagemagick.org/script/index.php).
+In MacOSX, you can install them by using [HomeBrew](https://brew.sh/).
+
+```
+brew install imagemagick
+```
+
+Then, install @speee/iiopt using npm:
+
 ```
 $ npm install @speee/iiopt
 ```

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { PNG } from 'pngjs';
+import * as child_process from 'child_process';
 
 export class Image {
   public readonly path: string;
@@ -41,12 +42,28 @@ export class Image {
   }
 
   // NOTE:
+  // The compression quality of jpeg should be 85 or less.
+  // we check it by imagemagick identify command.
+  // see: https://developers.google.com/web/tools/lighthouse/audits/optimize-images
+  // see: http://www.imagemagick.org/script/identify.php
+  isQuality85orLess() {
+    return new Promise<boolean>((resolve, reject) => {
+      const cmd = `identify -format "%Q" ${this.path}`;
+      const shell = child_process.exec(cmd, { }, (err, stdout) => {
+        if (err) { return reject(err); }
+        resolve(parseInt(stdout.toString(), 10) <= 85);
+        return reject(new Error('Unable to parse dimensions from output: ' + stdout.toString()));
+      });
+    });
+  }
+
+  // NOTE:
   // Currently, only Png image can discriminate, whether it have been optimized.
   async isOptimized() {
     if (this.isPng()) {
       return await this.isPaletteIndex();
     } else if (this.isJpg()) {
-      return false;
+      return await this.isQuality85orLess();
     } else {
       throw new Error('Only PNG or JPG image is allowed.');
     }

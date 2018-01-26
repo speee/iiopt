@@ -19,12 +19,14 @@ describe('needsToOptimize', () => {
     await expect(image.isOptimized()).resolves.toBeTruthy();
   });
 
-  xit('if optimized jpeg image is given', () => {
-    // TODO: Pending
+  it('if optimized jpeg image is given', async () => {
+    const image = new Image('./images/sample_optimized.jpg');
+    await expect(image.isOptimized()).resolves.toBeTruthy();
   });
 
-  xit('if not optimized jpeg image is given', () => {
-    // TODO: Pending
+  it('if not optimized jpeg image is given', async () => {
+    const image = new Image('./images/sample.jpg');
+    await expect(image.isOptimized()).resolves.toBeFalsy();
   });
 
   it('if not image file is given', async () => {
