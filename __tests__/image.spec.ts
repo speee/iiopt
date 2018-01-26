@@ -8,7 +8,7 @@ describe('constructer', () => {
   });
 });
 
-describe('PNG Image needsToOptimize', () => {
+describe('needsToOptimize', () => {
   it('if optimized png image is given', async () => {
     const image = new Image('./images/illust.png');
     await expect(image.isOptimized()).resolves.toBeFalsy();
@@ -18,14 +18,19 @@ describe('PNG Image needsToOptimize', () => {
     const image = new Image('./images/illust_optimized.png');
     await expect(image.isOptimized()).resolves.toBeTruthy();
   });
-});
 
-xdescribe('JPG image needsToOptimize', () => {
   xit('if optimized jpeg image is given', () => {
     // TODO: Pending
   });
 
   xit('if not optimized jpeg image is given', () => {
     // TODO: Pending
+  });
+
+  it('if not image file is given', async () => {
+    const image = new Image('./LICENSE.md');
+    return image.isOptimized().catch(e =>
+      expect(e).toEqual( new Error('Only PNG or JPG image is allowed.'))
+    );
   });
 });

@@ -48,7 +48,7 @@ export class Image {
     } else if (this.isJpg()) {
       return false;
     } else {
-       throw new Error('hogehoge');
+      throw new Error('Only PNG or JPG image is allowed.');
     }
   }
 }
