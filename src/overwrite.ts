@@ -16,7 +16,7 @@ export async function run(input, opts) {
 
     const files = await optimize(rawImagePaths, opts);
     await fs.writeFile(imagePath, files[0].data, (err) => {
-      if (err) { throw err; }
+      if (err) { reject(err.message); }
     });
 
     image.afterSize = files[0].data.length;
