@@ -1,35 +1,28 @@
 import fs from 'fs';
 import child_process from 'child_process';
+import { promisify } from 'util';
+
 import * as ApplyNewFiles from '../src/apply_new_files';
 
-function unlink() {
-  try {
-    fs.unlinkSync('.git/hooks/pre-commit');
-  } catch (err) {}
-}
-
 describe('iiopt --apply-new-files', () => {
-  beforeAll(() => {
-    unlink();
-    child_process.execSync('bin/cli --install-git-hooks');
-    try { fs.mkdirSync('./test_images'); } catch (err) {}
+  beforeAll( async () => {
+    await promisify(fs.unlink)('.git/hooks/pre-commit').catch(err => {});
+    await promisify(child_process.exec)('bin/cli --install-git-hooks');
+    await promisify(fs.mkdir)('./test_images');
   });
 
-  afterAll(() => {
-    unlink();
-    child_process.execSync('git reset HEAD test_images/sample.jpg');
-    child_process.execSync('rm -rf test_images');
+  afterAll( async () => {
+    await promisify(fs.unlink)('.git/hooks/pre-commit');
+    await promisify(child_process.exec)('git reset HEAD test_images/sample.jpg');
+    await promisify(child_process.exec)('rm -rf test_images');
   });
 
-  test('commited raw images are compressed', () => {
-    // NOTE: fs.copyFile function is supported in node version 8.x
-    // we support node version larger than 6.x
-    const image = fs.readFileSync('images/sample.jpg');
-    fs.writeFileSync('./test_images/sample.jpg', image);
-    child_process.execSync('git add test_images/sample.jpg');
-    const rawImage = fs.readFileSync('test_images/sample.jpg');
-    child_process.execSync('bin/cli --apply-new-files');
-    const compressedImage = fs.readFileSync('test_images/sample.jpg');
+  test('commited raw images are compressed', async () => {
+    await promisify(fs.copyFile)('images/sample.jpg', './test_images/sample.jpg');
+    await promisify(child_process.exec)('git add test_images/sample.jpg');
+    const rawImage = await promisify(fs.readFile)('test_images/sample.jpg');
+    await promisify(child_process.exec)('bin/cli --apply-new-files');
+    const compressedImage = await promisify(fs.readFile)('test_images/sample.jpg');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
