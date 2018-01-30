@@ -3,6 +3,8 @@ import * as path from 'path';
 import { Image } from './image';
 import { optimize } from './optimizer';
 import { RawImageExtractor } from './raw_image_extractor';
+import { promisify } from 'util';
+const writeFileAsync = promisify(fs.writeFile);
 
 export async function run(input, opts) {
   const imagePath = input[0];
@@ -14,10 +16,7 @@ export async function run(input, opts) {
   }
 
   const files = await optimize(rawImagePaths, opts);
-  await fs.writeFile(imagePath, files[0].data, (err) => {
-    if (err) { throw err; }
-  });
-
+  await writeFileAsync(imagePath, files[0].data);
   image.afterSize = files[0].data.length;
   return image.compressionReport();
 }
