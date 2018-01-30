@@ -57,8 +57,6 @@ export class Image {
     });
   }
 
-  // NOTE:
-  // Currently, only Png image can discriminate, whether it have been optimized.
   async isOptimized() {
     if (this.isPng()) {
       return await this.isPaletteIndex();
