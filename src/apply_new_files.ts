@@ -11,24 +11,22 @@ function extractAddedOrModifiedImageFiles() {
 }
 
 export async function run(opts) {
-  return new Promise<string[]>( async (resolve, reject) => {
-    const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
-    if (images.length === 0 ) { return ''; }
+  const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
+  if (images.length === 0 ) { return ''; }
 
-    const rawImagePaths = await new RawImageExtractor(images).extract();
-    if (rawImagePaths.length === 0) {
-      return reject('There are no images to optimize');
-    }
+  const rawImagePaths = await new RawImageExtractor(images).extract();
+  if (rawImagePaths.length === 0) {
+    throw new Error('There are no images to optimize');
+  }
 
-    return rawImagePaths.map( async (imagePath) => {
-      const image = images.find((e) => e.path === imagePath);
-      const files = await optimize([imagePath], opts);
-      await fs.writeFile(imagePath, files[0].data, (err) => {
-        if (err) { throw err; }
-      });
-      image.afterSize = files[0].data.length;
-      await child_process.exec(`git add ${imagePath}`);
-      return image.compressionReport();
+  return rawImagePaths.map( async (imagePath) => {
+    const image = images.find((e) => e.path === imagePath);
+    const files = await optimize([imagePath], opts);
+    await fs.writeFile(imagePath, files[0].data, (err) => {
+      if (err) { throw err; }
     });
+    image.afterSize = files[0].data.length;
+    await child_process.exec(`git add ${imagePath}`);
+    return image.compressionReport();
   });
 }

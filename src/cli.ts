@@ -51,7 +51,6 @@ async function insertPrecommitHooks() {
 
 if (cli.flags.installGitHooks) {
   console.log('install script that hooks git pre-commit to compress image automatically');
-
   insertPrecommitHooks().then(
     process.exit(0)
   ).catch((err) => {
