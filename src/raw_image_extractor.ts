@@ -8,9 +8,13 @@ export class RawImageExtractor {
   }
 
   async optimizedImages(): Promise<string[]> {
-    return await
-      Promise.all(this.images.map(async (im) => (await im.isOptimized()) ? im.path : null))
-        .then(paths => paths.filter(Boolean));
+    const paths: string[] = [];
+    for (const im of this.images) {
+      if (await im.isOptimized()) {
+        paths.push(im.path);
+      }
+    }
+    return paths;
   }
 
   async extract(): Promise<string[]> {
