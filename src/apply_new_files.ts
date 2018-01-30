@@ -5,9 +5,10 @@ import { Image } from './image';
 import { RawImageExtractor } from './raw_image_extractor';
 
 function extractAddedOrModifiedImageFiles() {
-  const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
-  return results.filter((file) => /.png$|.jpg$/ig.test(file))
-                .map((file) => file.replace(/^[A|M]\t/, ''));
+  const results = child_process.execSync('git diff --cached --name-status').toString();
+  const regexp = /^(A|M)\s*\w*.*?\.(jpg$|png)$/gm;
+  return results.match(regexp)
+                .map((file) => file.replace(/^[A|M]\s*/, ''));
 }
 
 export async function run(opts) {
