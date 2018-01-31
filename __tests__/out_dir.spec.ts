@@ -1,58 +1,52 @@
 import fs from 'fs';
 import child_process from 'child_process';
 import { run } from '../src/out_dir';
+import { promisify } from 'util';
+
+const processExecAsync = promisify(child_process.exec);
+const readFileAsync = promisify(fs.readFile);
 
 describe('compress png images', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp');
-  });
+  beforeAll( async () => { await processExecAsync('rm -rf tmp && mkdir tmp'); });
 
-  test('output the image to the path that --out-dir option set', () => {
-    const rawImage = fs.readFileSync('images/illust.png');
-    child_process.execSync('bin/cli images/illust.png --out-dir tmp');
-    const compressedImage = fs.readFileSync('tmp/illust.png');
+  test('output the image to the path that --out-dir option set', async () => {
+    const rawImage = await readFileAsync('images/illust.png');
+    await processExecAsync('bin/cli images/illust.png --out-dir tmp');
+    const compressedImage = await readFileAsync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
 
 describe('optimize png images that has been optimized', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp');
-  });
+  beforeAll( async () => { await processExecAsync('rm -rf tmp && mkdir tmp'); });
 
-  test('skip optimized image', () => {
-    const imagePath = 'images/illust_optimized.png';
-    const optimizedImage = fs.readFileSync(imagePath);
-    child_process.execSync('bin/cli images/illust.png --out-dir tmp');
-    expect(fs.existsSync('tmp/illust_optimized.png')).toBeFalsy();
+  test('skip optimized image', async () => {
+    const optimizedImage = await readFileAsync('images/illust_optimized.png');
+    await processExecAsync(`bin/cli images/illust_optimized.png --out-dir tmp`);
+    return readFileAsync('tmp/illust_optimized.png').catch(e => expect(e.message).toMatch('no such file or directory'));
   });
 });
 
 describe('compress jpg images', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp');
-  });
+  beforeAll( async () => { await processExecAsync('rm -rf tmp && mkdir tmp'); });
 
-  test('output the image to the path that --out-dir option set', () => {
-    const rawImage = fs.readFileSync('images/illust.png');
-    child_process.execSync('bin/cli images/illust.png --out-dir ./tmp');
-    const compressedImage = fs.readFileSync('tmp/illust.png');
+  test('output the image to the path that --out-dir option set', async () => {
+    const rawImage = await readFileAsync('images/illust.png');
+    await processExecAsync('bin/cli images/illust.png --out-dir ./tmp');
+    const compressedImage = await readFileAsync('tmp/illust.png');
     expect(rawImage.byteLength).toBeGreaterThan(compressedImage.byteLength);
   });
 });
 
 describe('compress png and jpg images with regexp', () => {
-  beforeAll(() => {
-    child_process.execSync('rm -rf tmp && mkdir tmp');
-  });
+  beforeAll( async () => { await processExecAsync('rm -rf tmp && mkdir tmp'); });
 
-  test('output some images to tmp directory', () => {
-    const rawJpgImage = fs.readFileSync('images/sample.jpg');
-    const rawPngImage = fs.readFileSync('images/illust.png');
-    child_process.execSync('bin/cli images/* --out-dir ./tmp/');
-    const compressedJpgImage = fs.readFileSync('tmp/sample.jpg');
-    const compressedPngImage = fs.readFileSync('tmp/illust.png');
-
+  test('output some images to tmp directory', async () => {
+    const rawJpgImage = await readFileAsync('images/sample.jpg');
+    const rawPngImage = await readFileAsync('images/illust.png');
+    await processExecAsync('bin/cli images/* --out-dir ./tmp/');
+    const compressedJpgImage = await readFileAsync('tmp/sample.jpg');
+    const compressedPngImage = await readFileAsync('tmp/illust.png');
     expect(rawJpgImage.byteLength).toBeGreaterThan(compressedJpgImage.byteLength);
     expect(rawPngImage.byteLength).toBeGreaterThan(compressedPngImage.byteLength);
   });
