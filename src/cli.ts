@@ -49,9 +49,12 @@ export function run() {
   if ( cli.flags.installGitHooks ) {
     installGitHooks();
   } else if ( cli.flags.applyNewFiles ) {
-    ApplyNewFiles.run(cli.flags)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    ApplyNewFiles.run(cli.flags).then((reports) => {
+      reports.forEach((report) => {
+        console.log(report);
+      });
+    }).catch((err) => { console.log(err.message); } );
+
   } else if (cli.flags.overwrite) {
     if (cli.input.length > 1) {
       console.error('only one image can overwrite');
