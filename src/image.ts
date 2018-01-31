@@ -29,7 +29,7 @@ export class Image {
   }
 
   // NOTE:
-  // If this function returns true value, the image is already optimized.
+  // If this function returns true value, the image is optimized by pngquant.
   // see https://www.w3.org/TR/PNG-Chunks.html
   isPaletteIndex() {
     return new Promise<boolean>((resolve, err) => {
