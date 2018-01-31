@@ -8,7 +8,7 @@ const promisifyWriteFile = promisify(fs.writeFile);
 
 function extractAddedOrModifiedImageFiles() {
   const results = child_process.execSync('git diff --cached --name-status').toString();
-  const regexp = /^(A|M)\s*\w*.*?\.(jpg$|png)$/gm;
+  const regexp = /^[AM]\s.+\.(?:jpg|png)$/gm;
   return results.match(regexp)
                 .map((file) => file.replace(/^[A|M]\s*/, ''));
 }
