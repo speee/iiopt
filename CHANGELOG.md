@@ -1,4 +1,7 @@
 # Change Log
+## v0.3.0 - 2018-02-01
+- Prevent optimizing images that have been optimized [#7](https://github.com/speee/iiopt/pull/7)
+
 ## v0.2.0 - 2018-01-22
 ### Added
 
