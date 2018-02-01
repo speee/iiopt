@@ -14,7 +14,7 @@ export async function run(input, opts) {
   }
 
   const rawImagePath = image.path;
-  const files = await optimize(rawImagePath, opts);
+  const files = await optimize([rawImagePath], opts);
   await writeFileAsync(rawImagePath, files[0].data);
   image.afterSize = files[0].data.length;
   return image.compressionReport();
