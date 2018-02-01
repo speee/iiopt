@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import { PNG } from 'pngjs';
 import * as child_process from 'child_process';
+import { promisify } from 'util';
+const execAsync = promisify(child_process.exec);
 
 export class Image {
   public readonly path: string;
@@ -46,15 +48,10 @@ export class Image {
   // we check it by imagemagick identify command.
   // see: https://developers.google.com/web/tools/lighthouse/audits/optimize-images
   // see: http://www.imagemagick.org/script/identify.php
-  isQuality85orLess() {
-    return new Promise<boolean>((resolve, reject) => {
-      const cmd = `identify -format "%Q" ${this.path}`;
-      const shell = child_process.exec(cmd, { }, (err, stdout) => {
-        if (err) { return reject(err); }
-        resolve(parseInt(stdout.toString(), 10) <= 85);
-        return reject(new Error('Unable to parse dimensions from output: ' + stdout.toString()));
-      });
-    });
+  async isQuality85orLess() {
+    const cmd = `identify -format "%Q" ${this.path}`;
+    const result = await execAsync(cmd);
+    return parseInt(result.stdout.toString(), 10) <= 85;
   }
 
   async isOptimized() {

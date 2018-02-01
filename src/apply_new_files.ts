@@ -6,7 +6,7 @@ import { RawImageExtractor } from './raw_image_extractor';
 import { promisify } from 'util';
 
 const writeFileAsync = promisify(fs.writeFile);
-const processExecAsync = promisify(child_process.exec);
+const execAsync = promisify(child_process.exec);
 
 function extractAddedOrModifiedImageFiles() {
   const results = child_process.execSync('git diff --cached --name-status').toString();
@@ -30,7 +30,7 @@ export async function run(opts): Promise<string[]> {
     const files = await optimize([imagePath], opts);
     await writeFileAsync(imagePath, files[0].data);
     image.afterSize = files[0].data.length;
-    await processExecAsync(`git add ${imagePath}`);
+    await execAsync(`git add ${imagePath}`);
     results.push(image.compressionReport());
   }
   return results;
