@@ -2,28 +2,38 @@ import * as child_process from 'child_process';
 import { optimize } from './optimizer';
 import * as fs from 'fs';
 import { Image } from './image';
+import { RawImageExtractor } from './raw_image_extractor';
+import { promisify } from 'util';
 
-function extractAddedOrModifiedImageFiles() {
-  const results = child_process.execSync('git diff --cached --name-status').toString().split('\n');
-  return results.filter((file) => /.png$|.jpg$/ig.test(file))
-                .map((file) => file.replace(/^[A|M]\t/, ''));
+const writeFileAsync = promisify(fs.writeFile);
+const execAsync = promisify(child_process.exec);
+
+function extractAddedOrModifiedImageFiles(): string[] {
+  const results = child_process.execSync('git diff --cached --name-status').toString();
+  const regexp = /^[AM]\s.+\.(?:jpg|png)$/gm;
+  const files = results.match(regexp);
+  if (files) {
+    return files.map((file) => file.replace(/^[A|M]\s*/, ''));
+  } else {
+    return [];
+  }
 }
 
-export function run(opts) {
-  const images = extractAddedOrModifiedImageFiles();
-  if (images.length === 0 ) {
-    process.exit(0);
-  }
+export async function run(opts): Promise<string[]> {
+  const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
+  if (images.length === 0 ) { return []; }
 
-  images.forEach( async (imagePath) => {
-    const image = new Image(imagePath, fs.lstatSync(imagePath).size);
+  const rawImagePaths = await new RawImageExtractor(images).extract();
+  if (rawImagePaths.length === 0) { return []; }
+
+  const results: string[] = [];
+  for (const imagePath of rawImagePaths) {
+    const image = images.find((e) => e.path === imagePath);
     const files = await optimize([imagePath], opts);
-
-    fs.writeFileSync(imagePath, files[0].data);
+    await writeFileAsync(imagePath, files[0].data);
     image.afterSize = files[0].data.length;
-    child_process.execSync(`git add ${imagePath}`);
-    console.log(image.compressionReport());
-  });
-
-  console.log('image compressed');
+    await execAsync(`git add ${imagePath}`);
+    results.push(image.compressionReport());
+  }
+  return results;
 }

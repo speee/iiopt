@@ -11,7 +11,8 @@
     "imagemin": "^5.3.1",
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngquant": "^5.0.1",
-    "meow": "^4.0.0"
+    "meow": "^4.0.0",
+    "pngjs": "^3.3.1"
   },
   "devDependencies": {
     "@types/jest": "^21.1.10",
@@ -22,6 +23,9 @@
     "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
+  },
+  "engines": {
+    "node": ">=8"
   },
   "files": [
     "build",
@@ -44,6 +48,6 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "yarn build && yarn jest"
+    "test": "yarn build && yarn jest --runInBand"
   }
 }

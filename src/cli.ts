@@ -35,32 +35,33 @@ const cli = meow(`
   }
 });
 
-if (cli.flags.installGitHooks) {
+function installGitHooks() {
   console.log('install script that hooks git pre-commit to compress image automatically');
-
   const script = `#!/bin/sh -e
   npx iiopt --apply-new-files
   `;
-
-  fs.writeFileSync('.git/hooks/pre-commit', script);
-  fs.chmodSync('.git/hooks/pre-commit', '755');
-  process.exit(0);
+  fs.writeFile('.git/hooks/pre-commit', script, { mode: 0o755 } , (err) => {
+    if (err) { throw err; }
+  });
 }
 
-export function run() {
-  if ( cli.flags.applyNewFiles ) {
-    ApplyNewFiles.run(cli.flags);
-  } else if (cli.flags.overwrite) {
-    if (cli.input.length > 1) {
-      console.error('only one image can overwrite');
-      process.exit(1);
+export async function run() {
+  const reports: string[] = [];
+  try {
+    if ( cli.flags.installGitHooks ) {
+      installGitHooks();
+    } else if ( cli.flags.applyNewFiles ) {
+      reports.push(...(await ApplyNewFiles.run(cli.flags)));
+    } else if (cli.flags.overwrite) {
+      if (cli.input.length > 1) { throw new Error('only one image can overwrite'); }
+      reports.push(await Overwrite.run(cli.input, cli.flags));
+    } else {
+      if (!cli.flags.outDir) { throw new Error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`'); }
+      reports.push(...(await OutDir.run(cli.input, cli.flags)));
     }
-    Overwrite.run(cli.input, cli.flags);
-  } else {
-    if (!cli.flags.outDir) {
-      console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
-      process.exit(1);
-    }
-    OutDir.run(cli.input, cli.flags);
+    reports.forEach((report) => console.log(report));
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
   }
 }
