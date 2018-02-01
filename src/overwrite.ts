@@ -12,7 +12,7 @@ export async function run(input, opts) {
   const rawImagePaths = await new RawImageExtractor([image]).extract();
 
   if (rawImagePaths.length === 0) {
-    return new Error(`${imagePath} is already optimized`);
+    throw new Error(`${imagePath} is already optimized`);
   }
 
   const files = await optimize(rawImagePaths, opts);

@@ -45,31 +45,29 @@ function installGitHooks() {
   });
 }
 
-export function run() {
+export async function run() {
+  const reports: string[] = [];
+
   if ( cli.flags.installGitHooks ) {
     installGitHooks();
   } else if ( cli.flags.applyNewFiles ) {
-    ApplyNewFiles.run(cli.flags).then((reports) => {
-      reports.forEach((report) => {
-        console.log(report);
-      });
-    }).catch((err) => { console.log(err.message); } );
-
+    const res = await ApplyNewFiles.run(cli.flags);
+    reports.push(...res);
   } else if (cli.flags.overwrite) {
     if (cli.input.length > 1) {
       console.error('only one image can overwrite');
       process.exit(1);
     }
-    Overwrite.run(cli.input, cli.flags)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    const res = await Overwrite.run(cli.input, cli.flags);
+    reports.push(res);
   } else {
     if (!cli.flags.outDir) {
       console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
       process.exit(1);
     }
-    OutDir.run(cli.input, cli.flags)
-      .then((res) => res.forEach((report) => console.log(report)))
-      .catch((err) => console.log(err));
+    const res = await OutDir.run(cli.input, cli.flags);
+    reports.push(...res);
   }
+
+  reports.forEach((report) => console.log(report));
 }
