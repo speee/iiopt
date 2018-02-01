@@ -32,7 +32,7 @@ export class Image {
   // If this function returns true value, the image is optimized by pngquant.
   // see https://www.w3.org/TR/PNG-Chunks.html
   isPaletteIndex() {
-    return new Promise<boolean>((resolve, err) => {
+    return new Promise<boolean>(resolve => {
       const png = new PNG();
       png.on('metadata', function(metadata) {
         resolve(metadata.palette);
