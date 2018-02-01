@@ -59,7 +59,6 @@ export async function run() {
       if (!cli.flags.outDir) { throw new Error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`'); }
       reports.push(...(await OutDir.run(cli.input, cli.flags)));
     }
-
     reports.forEach((report) => console.log(report));
   } catch (err) {
     console.error(err.message);

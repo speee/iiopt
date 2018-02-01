@@ -8,21 +8,23 @@ import { promisify } from 'util';
 const writeFileAsync = promisify(fs.writeFile);
 const execAsync = promisify(child_process.exec);
 
-function extractAddedOrModifiedImageFiles() {
+function extractAddedOrModifiedImageFiles(): string[] {
   const results = child_process.execSync('git diff --cached --name-status').toString();
   const regexp = /^[AM]\s.+\.(?:jpg|png)$/gm;
-  return results.match(regexp)
-                .map((file) => file.replace(/^[A|M]\s*/, ''));
+  const files = results.match(regexp);
+  if (files) {
+    return files.map((file) => file.replace(/^[A|M]\s*/, ''));
+  } else {
+    return [];
+  }
 }
 
 export async function run(opts): Promise<string[]> {
   const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
-  if (images.length === 0 ) { return ['']; }
+  if (images.length === 0 ) { return []; }
 
   const rawImagePaths = await new RawImageExtractor(images).extract();
-  if (rawImagePaths.length === 0) {
-    throw new Error('There are no images to optimize');
-  }
+  if (rawImagePaths.length === 0) { return []; }
 
   const results: string[] = [];
   for (const imagePath of rawImagePaths) {
