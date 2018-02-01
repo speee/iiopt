@@ -20,19 +20,21 @@ function extractAddedOrModifiedImageFiles(): string[] {
 }
 
 export async function run(opts): Promise<string[]> {
-  const images = extractAddedOrModifiedImageFiles().map((image) => new Image(image));
-  if (images.length === 0 ) { return []; }
+  const imagePaths = extractAddedOrModifiedImageFiles();
+  if (imagePaths.length === 0 ) { return []; }
 
-  const rawImagePaths = await new RawImageExtractor(images).extract();
-  if (rawImagePaths.length === 0) { return []; }
+  const rawImages = await new RawImageExtractor(imagePaths).extract();
+  if (rawImages.length === 0) { return []; }
 
+  // NOTE:
+  // By using imagemin, returned value from optimize function doesn't have a path property when the image is overwrited.
+  // So we optimize images one by one.
   const results: string[] = [];
-  for (const imagePath of rawImagePaths) {
-    const image = images.find((e) => e.path === imagePath);
-    const files = await optimize([imagePath], opts);
-    await writeFileAsync(imagePath, files[0].data);
+  for (const image of rawImages) {
+    const files = await optimize([image.path], opts);
+    await writeFileAsync(image.path, files[0].data);
     image.afterSize = files[0].data.length;
-    await execAsync(`git add ${imagePath}`);
+    await execAsync(`git add ${image.path}`);
     results.push(image.compressionReport());
   }
   return results;
