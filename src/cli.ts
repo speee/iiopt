@@ -47,27 +47,22 @@ function installGitHooks() {
 
 export async function run() {
   const reports: string[] = [];
+  try {
+    if ( cli.flags.installGitHooks ) {
+      installGitHooks();
+    } else if ( cli.flags.applyNewFiles ) {
+      reports.push(...(await ApplyNewFiles.run(cli.flags)));
+    } else if (cli.flags.overwrite) {
+      if (cli.input.length > 1) { throw new Error('only one image can overwrite'); }
+      reports.push(await Overwrite.run(cli.input, cli.flags));
+    } else {
+      if (!cli.flags.outDir) { throw new Error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`'); }
+      reports.push(...(await OutDir.run(cli.input, cli.flags)));
+    }
 
-  if ( cli.flags.installGitHooks ) {
-    installGitHooks();
-  } else if ( cli.flags.applyNewFiles ) {
-    const res = await ApplyNewFiles.run(cli.flags);
-    reports.push(...res);
-  } else if (cli.flags.overwrite) {
-    if (cli.input.length > 1) {
-      console.error('only one image can overwrite');
-      process.exit(1);
-    }
-    const res = await Overwrite.run(cli.input, cli.flags);
-    reports.push(res);
-  } else {
-    if (!cli.flags.outDir) {
-      console.error('--out-dir or --overwrite parameter is needed, specify a `--overwrite`');
-      process.exit(1);
-    }
-    const res = await OutDir.run(cli.input, cli.flags);
-    reports.push(...res);
+    reports.forEach((report) => console.log(report));
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
   }
-
-  reports.forEach((report) => console.log(report));
 }

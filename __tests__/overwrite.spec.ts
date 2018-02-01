@@ -26,7 +26,8 @@ describe('overwrite images', () => {
 
   test("optimized png image is given", async () => {
     const beforeImage = await readFileAsync('tmp/illust_optimized.png');
-    const result =  await processExecAsync('bin/cli ./tmp/illust_optimized.png --overwrite');
-    expect(result.stdout).toContain('./tmp/illust_optimized.png is already optimized');
+    const result =  await processExecAsync;
+    return processExecAsync('bin/cli ./tmp/illust_optimized.png --overwrite')
+            .catch(e => expect(e.message).toMatch('./tmp/illust_optimized.png is already optimized'));
   });
 });

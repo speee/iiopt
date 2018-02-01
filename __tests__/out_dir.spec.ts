@@ -22,8 +22,8 @@ describe('optimize png images that has been optimized', () => {
 
   test('skip optimized image', async () => {
     const optimizedImage = await readFileAsync('images/illust_optimized.png');
-    await processExecAsync(`bin/cli images/illust_optimized.png --out-dir tmp`);
-    return readFileAsync('tmp/illust_optimized.png').catch(e => expect(e.message).toMatch('no such file or directory'));
+    return processExecAsync(`bin/cli images/illust_optimized.png --out-dir tmp`)
+            .catch(e => expect(e.message).toMatch('There are no images to optimize'));
   });
 });
 
