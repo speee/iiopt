@@ -18,8 +18,8 @@ export async function extractAmongCache(): Promise<string[]> {
   return extractAddedOrModifiedImageFiles(results.stdout);
 }
 
-export async function rawImagesCreatedInCurrentBranch(): Promise<string[]> {
-  const results = await execAsync('git diff --name-status origin/master');
+export async function detectNewRawImagesFrom(branch = 'origin/master'): Promise<string[]> {
+  const results = await execAsync(`git diff --name-status ${branch}`);
   const imagePaths = extractAddedOrModifiedImageFiles(results.stdout);
   const rawImages = await new RawImageExtractor(imagePaths).extract();
   return rawImages.map(image => image.path);
