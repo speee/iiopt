@@ -34,7 +34,7 @@ $ iiopt --help
     --install-git-hooks, install script that hooks git pre-commit to compress image automatically
     --overwrite, -o  overwrite images
     --apply-new-files, compress images before git commit.
-    --detect-new-raw-images-from, detect raw images in current branch.
+    --detect-new-raw-images-from, detecting new raw images in a current working branch.
   Example
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images, and the results are stored into ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
@@ -57,7 +57,7 @@ Currently, also compressed images were recompressed when these were staged.
 If you want to commit already compressed images, use `git commit --no-verify` to skip the git pre-commit hook.
 
 
-### Detect raw images in current branch.
+### Detecting new raw images in a current working branch.
 
 iiopt also has a feature that detects unoptimized images in a current working branch.
 The feature is run by the following command.
