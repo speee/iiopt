@@ -4,6 +4,7 @@ import * as meow from 'meow';
 import * as Overwrite from './overwrite';
 import * as OutDir from './out_dir';
 import * as ApplyNewFiles from './apply_new_files';
+import * as gitDiff from './git_diff';
 
 const cli = meow(`
   Usage
@@ -14,6 +15,7 @@ const cli = meow(`
     --install-git-hooks, install script that hooks git pre-commit to compress image automatically
     --overwrite, -o  overwrite images
     --apply-new-files, compress images before git commit.
+    --detect-new-raw-images-from, detect raw images in current branch.
   Example
     $ iiopt images/sample.jpg --out-dir ./compressed # compressed images, and the results are stored into ./compressed directory
     $ iiopt foo.png -o # overwrite foo.png with compressed image
@@ -31,6 +33,9 @@ const cli = meow(`
     applyNewFiles: {
       type: 'boolean',
       default: false
+    },
+    detectNewRawImagesFrom: {
+      type: 'string'
     }
   }
 });
@@ -48,9 +53,16 @@ function installGitHooks() {
 export async function run() {
   const reports: string[] = [];
   try {
-    if ( cli.flags.installGitHooks ) {
+    if (cli.flags.installGitHooks) {
       installGitHooks();
-    } else if ( cli.flags.applyNewFiles ) {
+    } else if (cli.flags.detectNewRawImagesFrom) {
+      const branch = cli.flags.detectNewRawImagesFrom;
+      const rawImagePaths = await gitDiff.detectNewRawImagesFrom(branch);
+      if ( rawImagePaths.length > 0 ) {
+        rawImagePaths.forEach(path => console.error(path));
+        throw new Error('there are raw images in this branch');
+      }
+    } else if (cli.flags.applyNewFiles) {
       reports.push(...(await ApplyNewFiles.run(cli.flags)));
     } else if (cli.flags.overwrite) {
       if (cli.input.length > 1) { throw new Error('only one image can overwrite'); }

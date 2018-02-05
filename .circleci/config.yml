@@ -25,3 +25,6 @@ jobs:
       - run:
           name: Running lint
           command: yarn lint
+      - run:
+          name: iiopt --detect-new-raw-images-from
+          command: iiopt --detect-new-raw-images-from=origin/master
