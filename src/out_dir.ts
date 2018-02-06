@@ -1,7 +1,4 @@
-import * as fs from "fs";
-import * as glob from "glob";
 import * as path from "path";
-import { Image } from "./image";
 import { optimize } from "./optimizer";
 import { RawImageExtractor } from "./raw_image_extractor";
 

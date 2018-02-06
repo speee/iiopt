@@ -30,19 +30,9 @@
   "engines": {
     "node": ">=8"
   },
-  "files": [
-    "build",
-    "bin"
-  ],
+  "files": ["build", "bin"],
   "homepage": "https://github.com/speee/iiopt",
-  "keywords": [
-    "image",
-    "jpeg",
-    "jpg",
-    "mozjpeg",
-    "png",
-    "pngquant"
-  ],
+  "keywords": ["image", "jpeg", "jpg", "mozjpeg", "png", "pngquant"],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -50,7 +40,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "tslint 'src/**/*.ts' -p tsconfig.json",
     "test": "yarn build && yarn jest --runInBand"
   }
 }
