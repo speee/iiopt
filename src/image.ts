@@ -1,7 +1,7 @@
-import * as fs from 'fs';
-import { PNG } from 'pngjs';
-import * as child_process from 'child_process';
-import { promisify } from 'util';
+import * as fs from "fs";
+import { PNG } from "pngjs";
+import * as child_process from "child_process";
+import { promisify } from "util";
 const execAsync = promisify(child_process.exec);
 
 export class Image {
@@ -36,7 +36,7 @@ export class Image {
   isPaletteIndex() {
     return new Promise<boolean>(resolve => {
       const png = new PNG();
-      png.on('metadata', function(metadata) {
+      png.on("metadata", function(metadata) {
         resolve(metadata.palette);
       });
       fs.createReadStream(this.path).pipe(png);
@@ -60,7 +60,7 @@ export class Image {
     } else if (this.isJpg()) {
       return await this.isQuality85orLess();
     } else {
-      throw new Error('Only PNG or JPG image is allowed.');
+      throw new Error("Only PNG or JPG image is allowed.");
     }
   }
 }

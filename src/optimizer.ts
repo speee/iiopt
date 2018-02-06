@@ -1,6 +1,6 @@
-import * as imagemin from 'imagemin';
-import * as imageminPngquant from 'imagemin-pngquant';
-import * as imageminMozjpeg from 'imagemin-mozjpeg';
+import * as imagemin from "imagemin";
+import * as imageminPngquant from "imagemin-pngquant";
+import * as imageminMozjpeg from "imagemin-mozjpeg";
 
 export function optimize(input, opts) {
   return new Promise<any[]>(resolver => {
@@ -9,7 +9,7 @@ export function optimize(input, opts) {
         imageminPngquant({ quality: 85 }),
         imageminMozjpeg({ progressive: true, quality: 85 })
       ]
-    }).then((files) => {
+    }).then(files => {
       resolver(files);
     });
   });

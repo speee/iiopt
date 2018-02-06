@@ -1,4 +1,4 @@
-import { Image } from './image';
+import { Image } from "./image";
 
 export class RawImageExtractor {
   private readonly images: Image[];
@@ -10,14 +10,16 @@ export class RawImageExtractor {
   async optimizedImages(): Promise<Image[]> {
     const paths: Image[] = [];
     for (const im of this.images) {
-      if (await im.isOptimized()) { paths.push(im); }
+      if (await im.isOptimized()) {
+        paths.push(im);
+      }
     }
     return paths;
   }
 
   async extract(): Promise<Image[]> {
     const optimizedImages = await this.optimizedImages();
-    return this.images.filter((image) => {
+    return this.images.filter(image => {
       return !optimizedImages.includes(image);
     });
   }
