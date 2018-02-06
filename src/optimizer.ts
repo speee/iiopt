@@ -1,6 +1,6 @@
 import * as imagemin from "imagemin";
-import * as imageminPngquant from "imagemin-pngquant";
 import * as imageminMozjpeg from "imagemin-mozjpeg";
+import * as imageminPngquant from "imagemin-pngquant";
 
 export function optimize(input, opts) {
   return new Promise<any[]>(resolver => {

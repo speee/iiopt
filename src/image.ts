@@ -1,6 +1,6 @@
+import * as child_process from "child_process";
 import * as fs from "fs";
 import { PNG } from "pngjs";
-import * as child_process from "child_process";
 import { promisify } from "util";
 const execAsync = promisify(child_process.exec);
 

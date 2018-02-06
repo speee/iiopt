@@ -1,7 +1,8 @@
 import * as fs from "fs";
+import { promisify } from "util";
 import { optimize } from "./optimizer";
 import { RawImageExtractor } from "./raw_image_extractor";
-import { promisify } from "util";
+
 const writeFileAsync = promisify(fs.writeFile);
 
 export async function run(input, opts) {
