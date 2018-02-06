@@ -3,8 +3,9 @@
     "tslint:recommended"
   ],
   "defaultSeverity": "error",
+  "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
-    // tslint:recmmended
+    "prettier": true,
     "adjacent-overload-signatures": true,
     "align": [
       false
@@ -90,7 +91,6 @@
       "check-type-operator",
       "check-preblock"
     ],
-    // Requires Type Info
     "await-promise": true,
     "match-default-export-name": false,
     "no-boolean-literal-compare": true,
