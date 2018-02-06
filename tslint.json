@@ -1,13 +1,9 @@
 {
-  // NOTE:
-  // https://github.com/palantir/tslint/blob/master/src/configs/recommended.ts
-  "extends": ["tslint:recommended", "tslint-config-prettier"],
-  "defaultSeverity": "error",
-  "rulesDirectory": ["tslint-plugin-prettier"],
+  "extends": ["tslint:recommended"],
   "rules": {
-    "prettier": true,
-    // override recoomended.ts
+    "object-literal-sort-keys" : false,
     "no-console": false,
-    "object-literal-sort-keys": false
+    "trailing-comma": false,
+    "arrow-parens": false
   }
 }

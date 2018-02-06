@@ -30,9 +30,19 @@
   "engines": {
     "node": ">=8"
   },
-  "files": ["build", "bin"],
+  "files": [
+    "build",
+    "bin"
+  ],
   "homepage": "https://github.com/speee/iiopt",
-  "keywords": ["image", "jpeg", "jpg", "mozjpeg", "png", "pngquant"],
+  "keywords": [
+    "image",
+    "jpeg",
+    "jpg",
+    "mozjpeg",
+    "png",
+    "pngquant"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

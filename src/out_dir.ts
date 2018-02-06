@@ -12,7 +12,8 @@ export async function run(input, opts) {
   return files.map(file => {
     const compressedImage = rawImages.find(image => {
       return path.basename(image.path) === path.basename(file.path);
-    });
+    })!;
+
     compressedImage.afterSize = file.data.length;
     return compressedImage.compressionReport();
   });
