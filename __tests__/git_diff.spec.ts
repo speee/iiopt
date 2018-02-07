@@ -1,5 +1,5 @@
-import fs from "fs";
 import child_process from "child_process";
+import fs from "fs";
 import { promisify } from "util";
 import * as gitDiff from "../src/git_diff";
 import { Image } from "../src/image";

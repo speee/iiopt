@@ -50,7 +50,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "tslint 'src/**/*.ts' -p tsconfig.json",
+    "lint": "tslint 'src/**/*.ts' '__tests__/**/*.ts'",
     "test": "yarn build && yarn jest --runInBand"
   }
 }
