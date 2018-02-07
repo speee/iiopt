@@ -1,23 +1,25 @@
-import fs from 'fs';
-import child_process from 'child_process';
+import child_process from "child_process";
+import fs from "fs";
+import { promisify } from "util";
 
-function unlink() {
-  try {
-    fs.unlinkSync('.git/hooks/pre-commit');
-  } catch (err) {}
-}
+const execAsync = promisify(child_process.exec);
+const exitAsync = promisify(fs.exists);
+const unlinkAsync = promisify(fs.unlink);
 
+describe("iiopt --install-git-hooks", () => {
+  beforeAll(
+    async () => await unlinkAsync(".git/hooks/pre-commit").catch(err => {})
+  );
 
-describe('iiopt --install-git-hooks', () => {
-  beforeAll(() => unlink());
-  afterAll(() => unlink());
+  afterAll(
+    async () => await unlinkAsync(".git/hooks/pre-commit").catch(err => {})
+  );
 
-  test('add .git/hooks/pre-commit', () => {
-    const beforeExist = fs.existsSync('.git/hooks/pre-commit');
+  test("add .git/hooks/pre-commit", async () => {
+    const beforeExist = await exitAsync(".git/hooks/pre-commit");
     expect(beforeExist).toBeFalsy();
-
-    child_process.execSync('bin/cli --install-git-hooks');
-    const afterExist = fs.existsSync('.git/hooks/pre-commit');
+    await execAsync("bin/cli --install-git-hooks");
+    const afterExist = await exitAsync(".git/hooks/pre-commit");
     expect(afterExist).toBeTruthy();
   });
 });

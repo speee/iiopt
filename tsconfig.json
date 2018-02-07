@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "es2017"
-    ],
+    "lib": ["es2017"],
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,10 +19,6 @@
     "target": "es5",
     "traceResolution": false
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
 }

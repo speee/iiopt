@@ -1,19 +1,22 @@
-import * as child_process from 'child_process';
-import { optimize } from './optimizer';
-import * as fs from 'fs';
-import { Image } from './image';
-import { RawImageExtractor } from './raw_image_extractor';
-import * as gitDiff from './git_diff';
-import { promisify } from 'util';
+import * as child_process from "child_process";
+import * as fs from "fs";
+import { promisify } from "util";
+import * as gitDiff from "./git_diff";
+import { optimize } from "./optimizer";
+import { RawImageExtractor } from "./raw_image_extractor";
 
 const writeFileAsync = promisify(fs.writeFile);
 const execAsync = promisify(child_process.exec);
 
 export async function run(opts): Promise<string[]> {
   const imagePaths = await gitDiff.extractAmongCache();
-  if (imagePaths.length === 0 ) { return []; }
+  if (imagePaths.length === 0) {
+    return [];
+  }
   const rawImages = await new RawImageExtractor(imagePaths).extract();
-  if (rawImages.length === 0) { return []; }
+  if (rawImages.length === 0) {
+    return [];
+  }
 
   // NOTE:
   // By using imagemin, returned value from optimize function doesn't have a path property when the image is overwrited.
