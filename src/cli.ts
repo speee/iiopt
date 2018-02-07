@@ -19,7 +19,7 @@ const cli = meow(
     --apply-new-files, compress images before git commit.
     --detect-new-raw-images-from, detect raw images in current branch.
   Example
-    # compressed images, and the results are stored into ./compressed directoryc
+    # compressed images, and the results are stored into ./compressed directory
     $ iiopt images/sample.jpg --out-dir ./compressed
     $ iiopt foo.png -o # overwrite foo.png with compressed image
 `,
