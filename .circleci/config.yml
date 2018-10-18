@@ -14,14 +14,14 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Running tests
-          command: yarn test
+          command: npm run test
       - run:
           name: Running lint
-          command: yarn lint
+          command: npm run lint
