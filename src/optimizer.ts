@@ -2,7 +2,7 @@ import * as imagemin from "imagemin";
 import * as imageminMozjpeg from "imagemin-mozjpeg";
 import * as imageminPngquant from "imagemin-pngquant";
 
-export function optimize(input, opts) {
+export function optimize(input, opts): Promise<any> {
   return new Promise<any[]>(resolver => {
     imagemin(input, opts.outDir, {
       plugins: [

@@ -5,7 +5,7 @@ import { RawImageExtractor } from "./raw_image_extractor";
 
 const writeFileAsync = promisify(fs.writeFile);
 
-export async function run(input, opts) {
+export async function run(input, opts): Promise<string> {
   const rawImages = await new RawImageExtractor(input).extract();
   const image = rawImages[0];
   if (!image) {

@@ -14,7 +14,7 @@ export class Image {
     this.beforeSize = fs.lstatSync(path).size;
   }
 
-  public compressionReport() {
+  public compressionReport(): string {
     return `
     path: ${this.path}
     before file size: ${this.beforeSize}
@@ -22,7 +22,7 @@ export class Image {
     `;
   }
 
-  public async isOptimized() {
+  public async isOptimized(): Promise<boolean> {
     if (this.isPng()) {
       return await this.isPaletteIndex();
     } else if (this.isJpg()) {
