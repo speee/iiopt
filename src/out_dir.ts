@@ -2,7 +2,7 @@ import * as path from "path";
 import { optimize } from "./optimizer";
 import { RawImageExtractor } from "./raw_image_extractor";
 
-export async function run(input, opts) {
+export async function run(input, opts): Promise<string[]> {
   const rawImages = await new RawImageExtractor(input).extract();
   if (rawImages.length === 0) {
     throw new Error("There are no images to optimize");

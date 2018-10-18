@@ -45,7 +45,7 @@ const cli = meow(
   }
 );
 
-function installGitHooks() {
+function installGitHooks(): void {
   console.log(
     "install script that hooks git pre-commit to compress image automatically"
   );
@@ -59,7 +59,7 @@ function installGitHooks() {
   });
 }
 
-export async function run() {
+export async function run(): Promise<void> {
   const reports: string[] = [];
   try {
     if (cli.flags.installGitHooks) {
